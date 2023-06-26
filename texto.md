@@ -3,7 +3,6 @@ title: Visão geral do Python para professores que usam C
 colorlinks: true
 geometry:
 - margin=2cm
-- nofoot
 - nohead
 papersize: a4
 fontsize: 12
@@ -145,6 +144,7 @@ Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo
 
 Em C existem dois tipos de comentário, o de linha (`//`{.c}) e o de bloco (`/* */`{.c}). Python também tem dois tipos de comentário, o de linha (`#`{.python}) e o de documentação (`''' '''`{.python}), que deve aparecer apenas como primeiro item de uma definição.
 
+
 ## Forma de execução
 
 C é usado comumente como um linguagem compilada. Isso implica que para testar qualquer trecho de código em C é necessário escrever um programa completo (com função `main`), compilar e depois executar o programa. Além disso, para exibir o valor de uma variável é necessário chamar uma função como `print` explicitamente (também é possível consultar os valores das variáveis usando um depurador).
@@ -162,7 +162,7 @@ O modo interativo é uma ferramente muito valioso, pois permite a rápida explor
 
 Não é necessário uma função `main` em Python, mas é uma boa prática criar uma e chamá-la explicitamente (como no exemplo).
 
-O Python tem alguns mecanismos para escrita e execução de testes, o mais simples é o `doctest`. Os exemplos escritos na documentação podem ser executados e verificados que estão corretos de forma automática. Por exemplo, se a função `conta_no_intervalo` está em um arquivo chamado `x.py`, os exemplos podem ser verificados com o comando `python -m doctest -v x.py`.
+O Python tem alguns mecanismos para escrita e execução de testes, o mais simples é o `doctest`. Os exemplos escritos na documentação podem ser executados e verificados de forma automática. Por exemplo, se a função `conta_no_intervalo` está em um arquivo chamado `x.py`, os exemplos podem ser verificados com o comando `python -m doctest -v x.py`.
 
 
 ## Sistema de tipos
@@ -170,8 +170,6 @@ O Python tem alguns mecanismos para escrita e execução de testes, o mais simpl
 C é comumente classificada como estaticamente tipada, isto é, os tipos são vinculados as variáveis em tempo de compilação (note que `void*`{.c} é um escape para essa regra que é amplamente utilizado pelas funções da biblioteca padrão, entre elas `malloc/free`{.c}). Os compiladores de C detectam muitos erros de tipo durante a compilação, no entanto, C permite a conversão implícita entre muitos tipos de dados, o que pode ser confuso para o aluno iniciante (por exemplo, `double`{.c} e `float`{.c} para `int`{.c}, arranjos para ponteiros, etc).
 
 Historicamente Python tem sido classificada como dinamicamente tipada, isto é, os tipos são vinculados em tempo de execução aos valores e não as variáveis. Isso implica, por exemplo, que uma mesma variável pode em momentos distintos armazenar valores de tipos distintos. Python tem algumas conversões implícitas de valores (como `int`{.python} para `float`{.python}).
-
-Em C existem diversos tipos numéricos, em Python são apenas dois: `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
 
 O Python 2 não suporta especificação dos tipos para variáveis e funções. A partir do Python 3.0, o suporte para especificação de tipos foi adiciona e a partir da versão 3.5 (lançada em 2015), esse suporte foi aprimorado (e continua sendo).
 
@@ -212,7 +210,7 @@ Após a atribuição `y = x`{.python}, `x`{.python} e `y`{.python} referenciam a
 
 Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas e outros tipos são mutáveis (é possível alterar a lista). Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
 
-Suponha que tivéssemos que implementar um TAD de dicionário (arranjo associativo de string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderiámos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
+Suponha que tivéssemos que implementar um TAD de dicionário (arranjo associativo de string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderíamos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
 
 ```c
 /* Devolve true se chave está presente em dic, false caso contrário.
@@ -249,28 +247,101 @@ Nas próximas duas seção mostramos um subconjunto do Python e como esse subcon
 
 # O básico de Python
 
-Além de ter uma biblioteca padrão extensa, a linguagem Python e o sistema de tipos do `mypy` também são extensos e com detalhes complexos. Para evitar que os alunos se percam na linguagem e deixem de focar nos fundamentos, é importante definir um subconjunto das construções da linguagem que devem ser utilizadas.
+O Python é uma linguagem extensa e tem uma biblioteca padrão extensa. O sistema de tipos do `mypy` e bastante poderoso e também extenso. Dessa forma, para evitar que os alunos se percam na linguagem e deixem de focar nos fundamentos, é importante delimitar um subconjunto das construções da linguagem para ser utilizado pelos alunos.
 
-Nessa seção consideramos construções fundamentais da linguagem C e como essas construções podem ser expressas em Python.
+Apresentamos a seguir um subconjunto suficiente para escrever qualquer algoritmo e estruturas de dados. Note que o código escrito nesse subconjunto pode ficar um pouco mais extenso e não ser considerado pythônico (código idiomático em Python).
 
 
 ## Estruturas de controle
 
-As principais estruturas de controle do C são: `if`{.c}, `switch/case`{.c}, `for`{.c}, `while`{.c}, `do/while`{.c}. As principais do Python são `if`{.python}, `for`{.python} e `while`{.python} (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma um `switch/case`{.c} mais geral).
+As principais estruturas de controle do Python são `if`{.python}, `for`{.python}, `while`{.python} e o `assert`{.python} (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma um `switch/case`{.c} similar ao do C, mas mais geral).
 
-Assim como no `if`{.c} do C, a cláusula `else`{.python} do `if`{.python} do Python é opcional. Para evitar o aumento de níveis na indentação de `if`{.python}s aninhamos, o Python tem a palavra chave `elif`{.python}. O exemplo a seguir mostra o uso do `if`{.python}.
-
-O `for`{.c} clássico do C não existe em Python. Em Python o `for`{.python} é usado para fazer iteração pelos elementos de uma coleção. A outra forma de iteração do Python é o `while`{.python}.
-
+Assim como no `if`{.c} do C, a cláusula `else`{.python} do `if`{.python} do Python é opcional. Para evitar o aumento de níveis na indentação de `if`{.python}s aninhamos, o Python permite a união de um `else`{.python} seguido de `if`{.python} com a palavra chave `elif`{.python}. O exemplo a seguir mostra o uso do `if`{.python}.
 
 ```python
+def sinal(n: int) -> str:
+    '''Devolve o sinal de n.
 
+    Exemplos
+    >>> sinal(3)
+    'positivo'
+    >>> sinal(0)
+    'neutro'
+    >>> sinal(-1)
+    'negativo'
+    '''
+    if n > 0:
+        return 'positivo'
+    else:
+        if n < 0:
+            return 'negativo'
+        else:
+            return 'neutro'
+    # ou usando o elif
+    # if n > 0:
+    #    return 'positivo'
+    # elif n < 0:
+    #     return 'negativo'
+    # else:
+    #     return 'neutro'
 ```
+
+O `for`{.c} clássico do C não existe em Python. Em Python o `for`{.python} é usado para fazer iteração pelos elementos de uma estrutura de dados. A outra forma de iteração do Python é o `while`{.python}. O exemplo a seguir mostra o uso do `for`{.python} e do `while`{.python}.
+
+```python
+def ordena(nomes: list[str]) -> list[str]:
+    '''
+    Cria uma nova lista com os mesmos elementos de nomes mas de forma ordenada.
+
+    Exemplo
+    >>> ordena(['Paulo', 'Ana', 'Maria', 'João'])
+    ['Ana', 'João', 'Maria', 'Paulo']
+    '''
+    r = []
+    for nome in nomes:
+        r.append(nome)
+        i = len(r) - 1
+        # r[i] é o nome que foi inserido
+        # troca r[i] com r[i - 1] até que ele fique na posição adequada
+        while i > 0 and r[i - 1] > r[i]:
+            tmp = r[i - 1]
+            r[i - 1] = r[i]
+            r[i] = tmp
+            # ou usando atribuição múltipla
+            # r[i - 1], r[i] = r[i], r[i - 1]
+            i -= 1
+    return r
+```
+
+Quando for necessário o índice dos elementos em uma iteração, podemos usar o `while`{.python} ou o `for`{.python} combinado com a função [`range`](https://docs.python.org/3/library/stdtypes.html#typesseq-range).
+
+```python
+def indice_maximo(valores: list[float]) -> int:
+    '''Encontra o índice do valor máximo em valores.
+
+    Requer que valores não seja vazio.
+
+    Exemplos
+    >>> indice_maximo([2, 1, 4, -2])
+    2
+    >>> indice_maximo([-1, -4, -1])
+    0
+    '''
+    assert len(valores) != 0, "valores não pode ser vazio"
+    imax = 0
+    for i in range(1, len(valores)):
+        if valores[imax] < valores[i]:
+            imax = i
+    return imax
+```
+
+
+No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}. O `assert`{.python} pode ser usado com uma ou duas expressões. O Python avalia a primeira expressão, se o resultador for `True`{.python}, a execução continua para a próxima linha, caso contrário, uma exceção é gerada com uma mensagem padrão ou com o resultado da segunda expressão do `assert`{.python} (se existir).
 
 
 ## Tipos de dados
 
-Todos os valores em Python são objetos
+Em C existem diversos tipos numéricos, em Python são apenas dois: `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
 
 
 ## Entrada e saída
