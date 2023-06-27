@@ -24,7 +24,7 @@ As linguagens Python e C têm muitos aspectos distintos (pois são comumente usa
 - Forma geral da sintaxe
 - Forma de execução
 - Sistema de tipos
-- Passagem de parâmeros
+- Atribuição e passagem de parâmeros
 - Gerência de memória
 - Biblioteca padrão
 
@@ -45,7 +45,7 @@ int conta_no_intervalo(int* valores, int n, int min, int max)
     // O correto seria declarar n, i, quant e o retorno da função como size_t.
     // Veja https://stackoverflow.com/q/66527638/5189607
     int quant = 0;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) { // as chaves poderiam ser omitidas nesse caso
         if (min <= valores[i] && valores[i] <= max)
             quant++;
     }
@@ -63,10 +63,11 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // Alocação explícita no heap
-    // int* valores = (int *) malloc(n * sizeof(int));
     // Alocação dinâmica implícita na pilha
     int valores[n];
+    // Ou alocação explícita no heap
+    // int* valores = (int *) malloc(n * sizeof(int));
+
     // O retorno de scanf não é verificado nas
     // próximas chamadas para simplificar o código.
     printf("Digite %d separados por espaço.\n", n);
@@ -98,9 +99,9 @@ def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
     >>> conta_no_intervalo([2, 5, 1, 4, 6, 8], 2, 6)
     4
     '''
-    # poderia ser
-    # quant: int = 0
     quant = 0
+    # ou com o tipo explícito
+    # quant: int = 0
     for valor in valores:
         # poderia ser
         # min <= valor <= max
@@ -140,7 +141,7 @@ Python utiliza a palavra chave `def`{.python} pra definições de funções e o 
 
 Em Python não existe operadores de pós e pré incremento/decremento, mas existem os operadores de atribuição com incremento/decremento (entre outros).
 
-Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}).
+Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}), simples ou triplo (para permitir strings com múltiplas linhas).
 
 Em C existem dois tipos de comentário, o de linha (`//`{.c}) e o de bloco (`/* */`{.c}). Python também tem dois tipos de comentário, o de linha (`#`{.python}) e o de documentação (`''' '''`{.python}), que deve aparecer apenas como primeiro item de uma definição.
 
@@ -167,9 +168,9 @@ O Python tem alguns mecanismos para escrita e execução de testes, o mais simpl
 
 ## Sistema de tipos
 
-C é comumente classificada como estaticamente tipada, isto é, os tipos são vinculados as variáveis em tempo de compilação (note que `void*`{.c} é um escape para essa regra que é amplamente utilizado pelas funções da biblioteca padrão, entre elas `malloc/free`{.c}). Os compiladores de C detectam muitos erros de tipo durante a compilação, no entanto, C permite a conversão implícita entre muitos tipos de dados, o que pode ser confuso para o aluno iniciante (por exemplo, `double`{.c} e `float`{.c} para `int`{.c}, arranjos para ponteiros, etc).
+C é comumente classificada como estaticamente tipada, isto é, os tipos são vinculados as variáveis em tempo de compilação (note que `void*`{.c} é um escape para essa regra que é amplamente utilizado pelas funções da biblioteca padrão, entre elas `malloc/free`{.c}). Os compiladores de C detectam muitos erros de tipo durante a compilação, no entanto, C permite a conversão implícita entre muitos tipos de dados, o diminui a confiabilidade e pode ser confuso para o aluno iniciante (por exemplo, `double`{.c} e `float`{.c} para `int`{.c}, arranjos para ponteiros, etc).
 
-Historicamente Python tem sido classificada como dinamicamente tipada, isto é, os tipos são vinculados em tempo de execução aos valores e não as variáveis. Isso implica, por exemplo, que uma mesma variável pode em momentos distintos armazenar valores de tipos distintos. Python tem algumas conversões implícitas de valores (como `int`{.python} para `float`{.python}).
+Historicamente Python tem sido classificada como dinamicamente tipada, isto é, os tipos são vinculados em tempo de execução aos valores e não as variáveis. Isso implica, por exemplo, que uma mesma variável pode em momentos distintos armazenar valores de tipos distintos. Python tem algumas conversões implícitas de valores (como `int`{.python} para `float`{.python}), mas menos do que C, por esse e outro motivos, o Python é considerado mais fortemente tipado do que C.
 
 O Python 2 não suporta especificação dos tipos para variáveis e funções. A partir do Python 3.0, o suporte para especificação de tipos foi adiciona e a partir da versão 3.5 (lançada em 2015), esse suporte foi aprimorado (e continua sendo).
 
@@ -186,7 +187,7 @@ Outro aspecto diferente entre as duas linguagem é que em C todos os tipos são 
 O principal efeito dessa diferença é visto na atribuição e na passagem de parâmetros. Discutimos essa questão na próxima seção.
 
 
-## Passagem de parâmetros
+## Atribuição e passagem de parâmetros
 
 Como em C "tudo é um valor", todas as atribuições e passagem de parâmetros são feitas por cópia (não tem referência!). No entanto, o uso de ponteiros permite contornar essa limitação, pois a cópia de um ponteiro em uma atribuição ou passagem de parâmetro acaba tendo o mesmo efeito de referências múltiplas para o mesmo valor.
 
@@ -208,9 +209,9 @@ x.append(6)
 
 Após a atribuição `y = x`{.python}, `x`{.python} e `y`{.python} referenciam a mesma lista, dessa forma, a alteração da lista por `x.append(6)`{.python} é refletida em `y` pois `x` e `y` referenciam a mesma lista.
 
-Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas e outros tipos são mutáveis (é possível alterar a lista). Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
+Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, tuplas, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas, conjuntos, dicionários e outros tipos são mutáveis (é possível alterar uma lista). Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
 
-Suponha que tivéssemos que implementar um TAD de dicionário (arranjo associativo de string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderíamos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
+Suponha que tivéssemos que implementar um TAD de dicionário (string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderíamos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
 
 ```c
 /* Devolve true se chave está presente em dic, false caso contrário.
@@ -231,16 +232,16 @@ Se um inteiro é atribuído para `valor` no corpo de `busca_chave`, `valor` pass
 
 ## Gerência de memória
 
-Os objetos em C podem ser alocados na pilha ou no heap. A alocação/desalocação dos objetos na pilha é feita automaticamente pelo ambiente de execução. Já a alocação/desalocação de objetos do heap deve ser feita de forma explícita pelo programador.
+Os objetos em C podem ser alocados na pilha ou no heap. A alocação/desalocação dos objetos na pilha é feita automaticamente pelo ambiente de execução. Já a alocação/desalocação de objetos no heap deve ser feita de forma explícita pelo programador.
 
-Em Python todos os objetos são alocados implicitamente do heap. A desalocação é feita de forma automática usando uma combinação de contagem de referências e coleta de lixo. Dessa forma, dois erros bastante comuns em C, a tentativa de desalocação de memória já desalocada e a tentativa de uso de memória já desalocada, não podem acontecer em Python.
+Em Python todos os objetos são alocados implicitamente no heap. A desalocação é feita de forma automática usando uma combinação de contagem de referências e coleta de lixo. Dessa forma, dois erros bastante comuns em C, a tentativa de desalocação de memória já desalocada e a tentativa de uso de memória já desalocada, não podem acontecer em Python.
 
 
 ## Biblioteca padrão
 
 A biblioteca padrão de C é pequena quando comparada com outras linguagens. Ela inclui diversas funções para comunicação com o sistema operacional, alguns funções para strings e números e poucas funções algorítmicas e de estruturas de dados.
 
-Por outro lado, o Python tem uma biblioteca padrão bastante extensa, que é um dos motivos pelos quais o Python é bastante utilizado. No entanto, também pode ser motivo de preocupação para alguns professores, pois existe a possibilidade dos alunos usar as funcionalidade prontas e deixar de implementar funcionalidades que são importante para o aprendizado. Mas isso não precisa ser dessa forma, o professor pode deixar claro o que pode ou não ser usado e o que é importante implementar.
+Por outro lado, o Python tem uma biblioteca padrão bastante extensa, que é um dos motivos pelos quais o Python é bastante utilizado. No entanto, também pode ser motivo de preocupação para alguns professores, pois existe a possibilidade dos alunos usarem as funcionalidade prontas e deixarem de implementar funcionalidades que são importante para o aprendizado. Mas isso não precisa ser dessa forma, o professor pode deixar claro o que pode ou não ser usado e o que é importante implementar.
 
 Nas próximas duas seção mostramos um subconjunto do Python e como esse subconjunto pode ser usado na implementação de alguns algoritmos e estruturas de dados.
 
@@ -254,7 +255,7 @@ Apresentamos a seguir um subconjunto suficiente para escrever qualquer algoritmo
 
 ## Estruturas de controle
 
-As principais estruturas de controle do Python são `if`{.python}, `for`{.python}, `while`{.python} e o `assert`{.python} (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma um `switch/case`{.c} similar ao do C, mas mais geral).
+As principais estruturas de controle do Python são `if`{.python}, `for`{.python}, `while`{.python} e o `assert`{.python} (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma similar ao `switch/case`{.c} do C, mas mais geral).
 
 Assim como no `if`{.c} do C, a cláusula `else`{.python} do `if`{.python} do Python é opcional. Para evitar o aumento de níveis na indentação de `if`{.python}s aninhamos, o Python permite a união de um `else`{.python} seguido de `if`{.python} com a palavra chave `elif`{.python}. O exemplo a seguir mostra o uso do `if`{.python}.
 
@@ -390,7 +391,7 @@ Ensino de programação
 
 - [SICP in Python](https://wizardforcel.gitbooks.io/sicp-in-python/content/) ([vídeos](https://inst.eecs.berkeley.edu/~cs61a/fa22/))
 
-- [Think Python 2e](https://greenteapress.com/wp/think-python-2e/)
+- [Think Python 2e](https://greenteapress.com/wp/think-python-2e/) ([tradução](https://penseallen.github.io/PensePython2e/) em português)
 
 Estrutura de dados
 

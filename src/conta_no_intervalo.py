@@ -4,9 +4,9 @@ def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
     >>> conta_no_intervalo([2, 5, 1, 4, 6, 8], 2, 6)
     4
     '''
-    # poderia ser
-    # quant: int = 0
     quant = 0
+    # ou com o tipo explícito
+    # quant: int = 0
     for valor in valores:
         # poderia ser
         # min <= valor <= max
