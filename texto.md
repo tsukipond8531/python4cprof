@@ -340,9 +340,84 @@ def indice_maximo(valores: list[float]) -> int:
 No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}. O `assert`{.python} pode ser usado com uma ou duas expressões. O Python avalia a primeira expressão, se o resultador for `True`{.python}, a execução continua para a próxima linha, caso contrário, uma exceção é gerada com uma mensagem padrão ou com o resultado da segunda expressão do `assert`{.python} (se existir).
 
 
-## Tipos de dados
+## Tipos de dados e operações pré-definidas
 
-Em C existem diversos tipos numéricos, em Python são apenas dois: `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
+Os principais tipos numéricos em Python são `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
+
+Além das quadro operações básicas, outras operações comuns em Python com números são a de módulo (`%`{.python}), exponenciação (`**`{.python}) e piso da divisão (`//`{.python}). Outras operações matemáticas estão disponíveis no módulo [`math`](https://docs.python.org/3/library/math.html).
+
+Em operações aritméticas que envolvem inteiros e floats, os inteiros são convertidos para floats antes da execução das operações.
+
+Os booleanos são representados pelo tipo `bool`{.python}, e podem assumir os valores `True`{.python} ou `False`{.python}. As operações com booleanos são `not`{.python}, `and`{.python} e `or`{.python}
+
+As strings são representadas pelo tipo `str`{.python} (armazenadas em utf-8). As strings são imutáveis em Python. Algumas operações comuns com strings são mostradas a seguir.
+
+```python
+>>> # Concatenação
+>>> 'Idade: ' + str(32)
+'Idade 32'
+
+>>> # Repetição
+>>> 'abc' * 3
+'abcabcabc'
+
+>>> # Remoção de espaços antes e depois
+>>> ' alguns espaços  '.strip()
+'alguns espaços'
+>>> # Versão com chamada na forma de função ao invés de método
+>>> str.strip(' alguns espaços  ')
+'alguns espaços'
+
+>>> # Substring
+>>> din = 'departamento de informatica'
+>>> din[13:15] # inicio:fim, inicio está incluido e fim não está
+'de'
+
+>>> # Quantidade de caracteres (code points)
+>>> len('teste')
+5
+```
+
+O Python não tem um tipo específico para representar um caractere, strings com um _code point_ são usadas com esse propósito.
+
+O tipo mais comum para sequência de valores e o `list`{.python}. O tipo `list`{.python} representa arranjos dinâmicos (os elementos são contíguos). Python não tem um tipo para arranjos de tamanho fixo. Os elementos de `list`{.python} são indexados a partir de `0` e o acesso e checado, se o índice estiver fora da faixa, uma exceção é lançada. Algumas operações com listas são mostradas a seguir.
+
+```python
+>>> # Inicialização com alguns elementos
+>>> lst = [3, 2, 4]
+>>> # Inicialização sem nenhum elemento
+>>> lst = [] # ou list()
+
+>>> # Adição de elemento no final - tempo amortizado de O(1)
+>>> lst.append(3)
+>>> lst.append(1)
+>>> lst
+[3, 1]
+
+>>> # Concatenção
+>>> lst.extend([4, 0, 1])
+>>> lst
+[3, 1, 4, 0, 1]
+
+>>> # Remoção do final - tempo O(1)
+>>> lst.pop()
+1
+>>> lst
+[3, 1, 4, 0]
+
+>>> # Criação de cópia - tempo O(n)
+>>> lst.copy()
+[3, 1, 4, 0]
+
+>>> # Quantidade de elementos - tempo O(1)
+>>> len(lst)
+4
+
+>>> # Remoção de todos os elementos - tempo O(n)
+>>> lst.clear()
+>>> lst
+[]
+```
 
 
 ## Entrada e saída
@@ -350,11 +425,6 @@ Em C existem diversos tipos numéricos, em Python são apenas dois: `int`{.pytho
 Python não tem funções para fazer entrada de dados formatada. A principal função de entrada em Python é `input` que recebe um argumento (mensagem a ser exibida) e retorna uma linha lida (string) da entrada padrão. A string lida pode ser convertida para outro tipo posteriormente, no exemplo, a função `int` converte a string para um inteiro (uma exceção é gerada se a conversão não puder ser feita).
 
 Python tem diversas funções de saída (incluindo saída formatada), a mais comum é o `print`. A função `print` recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str` e exibe os valores separando-os por espaço e adicionando um final de linha (esse comportamento pode ser alterado).
-
-
-
-## Tipos abstratos de dados
-
 
 
 # Exemplos
