@@ -33,97 +33,13 @@ Para exemplificar algumas dessas diferenças vamos utilizar os seguintes exemplo
 Código em C
 
 ```c
-#include <stdio.h>
-
-/*
- * Devolve a quantidade de items em valores que estão no intervalo [min, max].
- *
- * n é quantidade de items em valores que é analisada.
- */
-int conta_no_intervalo(int* valores, int n, int min, int max)
-{
-    // O correto seria declarar n, i, quant e o retorno da função como size_t.
-    // Veja https://stackoverflow.com/q/66527638/5189607
-    int quant = 0;
-    for (int i = 0; i < n; i++) { // as chaves poderiam ser omitidas nesse caso
-        if (min <= valores[i] && valores[i] <= max)
-            quant++;
-    }
-    return quant;
-}
-
-int main(int argc, char* argv[])
-{
-    printf("Este programa conta a quantidade de valores em um determinado intervalo.\n");
-
-    int n;
-    printf("Digite a quantidade de valores: ");
-    if (scanf("%d", &n) != 1 || n <= 0) {
-        printf("Valor inválido.\n");
-        return 1;
-    }
-
-    // Alocação dinâmica implícita na pilha
-    int valores[n];
-    // Ou alocação explícita no heap
-    // int* valores = (int *) malloc(n * sizeof(int));
-
-    // O retorno de scanf não é verificado nas
-    // próximas chamadas para simplificar o código.
-    printf("Digite %d separados por espaço.\n", n);
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &valores[i]);
-    }
-
-    int min;
-    printf("Digite o limite inferior do intervalo: ");
-    scanf("%d", &min);
-
-    int max;
-    printf("Digite o limite superior do intervalo: ");
-    scanf("%d", &max);
-
-    printf("Existe(m) %d valor(es) no intervalo.\n", conta_no_intervalo(valores, n, min, max));
-
-    // Desalocação explícita no caso de alocação no heap
-    // free(valores);
-}
+includefile src/conta_no_intervalo.c
 ```
 
 Código em Python
 
 ```python
-def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
-    '''Devolve a quantidade de items em valores que estão no intervalo [min, max].
-    Exemplo
-    >>> conta_no_intervalo([2, 5, 1, 4, 6, 8], 2, 6)
-    4
-    '''
-    quant = 0
-    # ou com o tipo explícito
-    # quant: int = 0
-    for valor in valores:
-        # poderia ser
-        # min <= valor <= max
-        if min <= valor and valor <= max:
-            quant += 1
-    return quant
-
-
-def main():
-    print('Este programa conta a quantidade de valores em um determinado intervalo.')
-    s = input('Digite os valores separados por espaço: ')
-    valores = []
-    for valor in s.split():
-        valores.append(int(valor))
-    min = int(input('Digite o limite inferior do intervalo: '))
-    max = int(input('Digite o limite superior do intervalo: '))
-
-    print('Existe(m)', conta_no_intervalo(valores, min, max), 'valor(es) no intervalo.')
-
-
-if __name__ == "__main__":
-    main()
+includefile src/conta_no_intervalo.py
 ```
 
 
@@ -260,82 +176,20 @@ As principais estruturas de controle do Python são `if`{.python}, `for`{.python
 Assim como no `if`{.c} do C, a cláusula `else`{.python} do `if`{.python} do Python é opcional. Para evitar o aumento de níveis na indentação de `if`{.python}s aninhamos, o Python permite a união de um `else`{.python} seguido de `if`{.python} com a palavra chave `elif`{.python}. O exemplo a seguir mostra o uso do `if`{.python}.
 
 ```python
-def sinal(n: int) -> str:
-    '''Devolve o sinal de n.
-
-    Exemplos
-    >>> sinal(3)
-    'positivo'
-    >>> sinal(0)
-    'neutro'
-    >>> sinal(-1)
-    'negativo'
-    '''
-    if n > 0:
-        return 'positivo'
-    else:
-        if n < 0:
-            return 'negativo'
-        else:
-            return 'neutro'
-    # ou usando o elif
-    # if n > 0:
-    #    return 'positivo'
-    # elif n < 0:
-    #     return 'negativo'
-    # else:
-    #     return 'neutro'
+includefile src/sinal.py
 ```
 
 O `for`{.c} clássico do C não existe em Python. Em Python o `for`{.python} é usado para fazer iteração pelos elementos de uma estrutura de dados. A outra forma de iteração do Python é o `while`{.python}. O exemplo a seguir mostra o uso do `for`{.python} e do `while`{.python}.
 
 ```python
-def ordena(nomes: list[str]) -> list[str]:
-    '''
-    Cria uma nova lista com os mesmos elementos de nomes mas de forma ordenada.
-
-    Exemplo
-    >>> ordena(['Paulo', 'Ana', 'Maria', 'João'])
-    ['Ana', 'João', 'Maria', 'Paulo']
-    '''
-    r = []
-    for nome in nomes:
-        r.append(nome)
-        i = len(r) - 1
-        # r[i] é o nome que foi inserido
-        # troca r[i] com r[i - 1] até que ele fique na posição adequada
-        while i > 0 and r[i - 1] > r[i]:
-            tmp = r[i - 1]
-            r[i - 1] = r[i]
-            r[i] = tmp
-            # ou usando atribuição múltipla
-            # r[i - 1], r[i] = r[i], r[i - 1]
-            i -= 1
-    return r
+includefile src/ordena.py
 ```
 
 Quando for necessário o índice dos elementos em uma iteração, podemos usar o `while`{.python} ou o `for`{.python} combinado com a função [`range`](https://docs.python.org/3/library/stdtypes.html#typesseq-range).
 
 ```python
-def indice_maximo(valores: list[float]) -> int:
-    '''Encontra o índice do valor máximo em valores.
-
-    Requer que valores não seja vazio.
-
-    Exemplos
-    >>> indice_maximo([2, 1, 4, -2])
-    2
-    >>> indice_maximo([-1, -4, -1])
-    0
-    '''
-    assert len(valores) != 0, "valores não pode ser vazio"
-    imax = 0
-    for i in range(1, len(valores)):
-        if valores[imax] < valores[i]:
-            imax = i
-    return imax
+includefile src/indice_maximo.py
 ```
-
 
 No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}. O `assert`{.python} pode ser usado com uma ou duas expressões. O Python avalia a primeira expressão, se o resultador for `True`{.python}, a execução continua para a próxima linha, caso contrário, uma exceção é gerada com uma mensagem padrão ou com o resultado da segunda expressão do `assert`{.python} (se existir).
 
