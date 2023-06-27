@@ -13,10 +13,10 @@ def ordena(nomes: list[str]) -> list[str]:
         # r[i] é o nome que foi inserido
         # troca r[i] com r[i - 1] até que ele fique na posição adequada
         while i > 0 and r[i - 1] > r[i]:
-            tmp = r[i - 1]
-            r[i - 1] = r[i]
-            r[i] = tmp
-            # ou usando atribuição múltipla
+            ri = r[i]
+            r[i] = r[i - 1]
+            r[i - 1] = ri
+            # Ou usando atribuição múltipla
             # r[i - 1], r[i] = r[i], r[i - 1]
-            i -= 1
+            i = i - 1
     return r

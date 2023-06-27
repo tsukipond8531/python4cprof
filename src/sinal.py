@@ -16,7 +16,7 @@ def sinal(n: int) -> str:
             return 'negativo'
         else:
             return 'neutro'
-    # ou usando o elif
+    # Ou usando o elif
     # if n > 0:
     #    return 'positivo'
     # elif n < 0:

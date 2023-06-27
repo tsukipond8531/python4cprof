@@ -12,7 +12,7 @@ numbersections: true
 
 # Introdução
 
-Neste texto apresentamos uma visão geral da linguagem Python para professores que vão ministrar algoritmos e estrutura de dados em Python e que têm experiência com o ensino usando C. O objetivo é esclarecer alguns pontos e mostrar como as construções algorítmicas de C podem ser expressas em Python. Note que o objetivo não é apresentar Python de forma profunda e nem descrever uma metodologia de ensino de algoritmos e estruturas de dados.
+Neste texto apresentamos uma visão geral da linguagem Python para professores que vão ministrar algoritmos ou estrutura de dados em Python e que têm experiência com o ensino usando C. O objetivo é esclarecer alguns pontos e mostrar como as construções algorítmicas de C podem ser expressas em Python. Note que o objetivo não é apresentar Python de forma profunda e nem descrever uma metodologia de ensino de algoritmos e estruturas de dados.
 
 Começamos com algumas diferenças entre as duas linguagens, depois discutimos as principais construções do Python, em seguida mostramos a implementação de alguns algoritmos e estruturas de dados e por fim apresentamos algumas convenções de código para Python e indicamos referências.
 
@@ -107,7 +107,7 @@ O principal efeito dessa diferença é visto na atribuição e na passagem de pa
 
 Como em C "tudo é um valor", todas as atribuições e passagem de parâmetros são feitas por cópia (não tem referência!). No entanto, o uso de ponteiros permite contornar essa limitação, pois a cópia de um ponteiro em uma atribuição ou passagem de parâmetro acaba tendo o mesmo efeito de referências múltiplas para o mesmo valor.
 
-Já em Python como "tudo é uma referência", todas as atribuições e passagem de parâmetros são feitas por referência. No exemplo a seguir, quanto `x` é atribuído para `y`, `y` passa a referenciar o mesmo valor referenciado por `x`. Em seguida, quando um novo valor é atribuído para `x`, `x` passa a referenciar esse novo valor e `y` não é alterado.
+Já em Python como ["tudo é uma referência"](https://docs.python.org/3/tutorial/classes.html#a-word-about-names-and-objects), todas as atribuições e passagem de parâmetros são feitas por referência. No exemplo a seguir, quanto `x` é atribuído para `y`, `y` passa a referenciar o mesmo valor referenciado por `x`. Em seguida, quando um novo valor é atribuído para `x`, `x` passa a referenciar esse novo valor e `y` não é alterado.
 
 ```python
 x = 10
@@ -234,7 +234,7 @@ As strings são representadas pelo tipo `str`{.python} (armazenadas em utf-8). A
 
 O Python não tem um tipo específico para representar um caractere, strings com um _code point_ são usadas com esse propósito.
 
-O tipo mais comum para sequência de valores e o `list`{.python}. O tipo `list`{.python} representa arranjos dinâmicos (os elementos são contíguos). Python não tem um tipo para arranjos de tamanho fixo. Os elementos de `list`{.python} são indexados a partir de `0` e o acesso e checado, se o índice estiver fora da faixa, uma exceção é lançada. Algumas operações com listas são mostradas a seguir.
+O tipo mais comum para sequência de valores e o `list`{.python}. O tipo `list`{.python} representa arranjos dinâmicos (os elementos são contíguos). Python não tem um tipo para arranjos de tamanho fixo. Os elementos de `list`{.python} são indexados a partir de `0`{.python} e o acesso é checado, se o índice estiver fora da faixa, uma exceção é lançada. Algumas operações com listas são mostradas a seguir.
 
 ```python
 >>> # Inicialização com alguns elementos
@@ -248,7 +248,11 @@ O tipo mais comum para sequência de valores e o `list`{.python}. O tipo `list`{
 >>> lst
 [3, 1]
 
->>> # Concatenção
+>>> # Concatenação gerando uma nova lista
+>>> lst + [4, 0, 1]
+[3, 1, 4, 0, 1]
+
+>>> # Concatenação alterando a lista
 >>> lst.extend([4, 0, 1])
 >>> lst
 [3, 1, 4, 0, 1]
@@ -267,10 +271,102 @@ O tipo mais comum para sequência de valores e o `list`{.python}. O tipo `list`{
 >>> len(lst)
 4
 
+>>> # Sublista
+>>> lst[1:3]
+[1, 4]
+
 >>> # Remoção de todos os elementos - tempo O(n)
 >>> lst.clear()
 >>> lst
 []
+```
+
+
+## Definição de tipos de dados
+
+Python é uma linguagem multiparadigma, mas a forma de criação de tipos é através de classes. De fato, quase tudo em Python é um objeto, com atributos e métodos. Por exemplo, valores inteiros são objetos e podemos invocar métodos com eles
+
+```python
+>>> # Invoca explicitamente o método __add__ (corresponde a operação +)
+>>> (1).__add__(2)
+3
+```
+
+Definir novas classes implica em pensar em construtores, superclasse, encapsulamento, etc, essas coisas não são adequadas para iniciantes. Por isso, não vamos ver a forma comumente utilizada para criar classes em Python, mas sim, duas formas simplificadas.
+
+A primeira delas é usando o decorador [`@dataclass`](https://docs.python.org/3/library/dataclasses.html). Um decorador é um mecanismo de meta-programação utilizado para modificar classes, métodos e atributos. Embora o funcionamento dos decoradores possa ser bastante elaborado, o seu uso em geral é direto e simples.
+
+Utilizamos o decorador `@dataclass`{.python} quando queremos criar uma classe que se comporte de forma semelhante a uma `struct`{.c} em C. Por exemplo, para definir uma classe que representa um aluno com RA e nome, fazemos
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Aluno:
+    ra: int
+    nome: str
+```
+
+Podemos usar essa classe da seguinte forma
+
+```python
+>>> # Instanciação
+>>> a = Aluno(12345, 'José da Silva')
+
+>>> # Acesso aos campos
+>>> a.ra
+12345
+>>> a.nome
+'José da Silva'
+
+>>> # Alteração dos campos
+>>> a.nome = 'José da Silva Andrade'
+
+>>> # Exibição
+>>> a
+Aluno(ra=1234, nome='José da Silva Andrade')
+
+>>> # Conversão para string
+>>> str(a)
+"Aluno(ra=1234, nome='José da Silva Andrade')"
+
+>>> # Comparação por igualdade - feita campo a campo
+>>> a == a
+True
+>>> a == Aluno(1234, 'José da Silva')
+False
+>>> a == Aluno(1234, 'José da Silva Andrade')
+True
+```
+
+A outra forma simplificada para criar classes é usando o [`Enum`](https://docs.python.org/3/library/enum.html). Usamos essa forma quando queremos criar um tipo enumerado, isto é, quando os valores permitidos para o tipo pode ser enumerados explicitamente. Classes criadas com esse mecanismos são semelhantes a tipos criados com `enum`{.c} em C. Por exemplo, vamos criar um tipo para representar as cores de um semáforo (observe que por convenção, escrevemos os valores enumerados em maiúsculas).
+
+```python
+from enum import Enum, auto
+
+class Cor(Enum):
+    VERMELHO = auto()
+    AMARELO = auto()
+    VERDE = auto()
+```
+
+Podemos usar essa classe da seguinte forma
+
+```python
+>>> # Comparação
+>>> cor = Cor.VERMELHO
+>>> cor == Cor.AMARELO
+False
+>>> Cor.VERMELHO == cor
+True
+
+>>> # Consulta o valor e nome
+>>> Cor.VERMELHO.value
+1
+>>> Cor.AMARELO.value
+2
+>>> Cor.VERMELHO.name
+'VERMELHO'
 ```
 
 

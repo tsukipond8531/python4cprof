@@ -5,22 +5,26 @@ def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
     4
     '''
     quant = 0
-    # ou com o tipo explícito
+    # Com tipo explícito
     # quant: int = 0
     for valor in valores:
-        # poderia ser
-        # min <= valor <= max
         if min <= valor and valor <= max:
-            quant += 1
+            # Com comparações encadeadas
+            # min <= valor <= max
+            quant = quant + 1
+            # Com atribuição com incremento
+            # quant += 1
     return quant
 
 
 def main():
     print('Este programa conta a quantidade de valores em um determinado intervalo.')
+
     s = input('Digite os valores separados por espaço: ')
     valores = []
     for valor in s.split():
         valores.append(int(valor))
+
     min = int(input('Digite o limite inferior do intervalo: '))
     max = int(input('Digite o limite superior do intervalo: '))
 
