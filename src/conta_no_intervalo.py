@@ -16,7 +16,6 @@ def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
             # quant += 1
     return quant
 
-
 def main():
     print('Este programa conta a quantidade de valores em um determinado intervalo.')
 
@@ -29,7 +28,6 @@ def main():
     max = int(input('Digite o limite superior do intervalo: '))
 
     print('Existe(m)', conta_no_intervalo(valores, min, max), 'valor(es) no intervalo.')
-
 
 if __name__ == "__main__":
     main()
