@@ -10,7 +10,7 @@ ${BUILD}/texto.md: texto.md bin/inclui.py src/*
 
 ${BUILD}/texto.pdf: ${BUILD}/texto.md
 	mkdir -p ${BUILD}
-	pandoc --pdf-engine tectonic -o $@ $<
+	pandoc --toc --pdf-engine tectonic -o $@ $<
 
 test:
 	python3 -B -m doctest src/*.py && echo OK
