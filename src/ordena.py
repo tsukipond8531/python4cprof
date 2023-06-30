@@ -16,7 +16,6 @@ def ordena(nomes: list[str]) -> list[str]:
             ri = r[i]
             r[i] = r[i - 1]
             r[i - 1] = ri
-            # Ou usando atribuição múltipla
-            # r[i - 1], r[i] = r[i], r[i - 1]
+
             i = i - 1
     return r
