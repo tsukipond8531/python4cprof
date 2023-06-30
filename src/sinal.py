@@ -1,25 +1,25 @@
 def sinal(n: int) -> str:
-    '''Devolve o sinal de n.
+    '''Devolve o sinal de n, isto é, 1 se n > 0, -1 se n < 1, 0 caso contrário.
 
     Exemplos
     >>> sinal(3)
-    'positivo'
+    1
     >>> sinal(0)
-    'neutro'
-    >>> sinal(-1)
-    'negativo'
+    0
+    >>> sinal(-4)
+    -1
     '''
     if n > 0:
-        return 'positivo'
+        return 1
     else:
         if n < 0:
-            return 'negativo'
+            return -1
         else:
-            return 'neutro'
+            return 0
     # Ou usando o elif
     # if n > 0:
-    #    return 'positivo'
+    #     return 1
     # elif n < 0:
-    #     return 'negativo'
+    #     return -1
     # else:
-    #     return 'neutro'
+    #     return 0
