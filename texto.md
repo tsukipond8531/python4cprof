@@ -34,7 +34,7 @@ includefile src/conta_no_intervalo.py
 ```
 
 
-## Formal geral da sintaxe
+## Forma geral da sintaxe
 
 A sintaxe do C é baseada em blocos delimitados por chaves (`{}`{.c}), a indentação do código não influencia a semântica. As chaves são opcionais nas instruções de controle quando apenas uma sentença é especificada. Na definição de estruturas e funções as chaves são sempre necessárias. As expressões/sentenças das instruções de controle devem ser especificadas entre parênteses. Os operadores lógicos são especificados com símbolos (`!`{.c}, `||`{.c}, `&&`{.c}).
 
@@ -160,7 +160,7 @@ O Python é uma linguagem extensa e tem uma biblioteca padrão extensa. O sistem
 Apresentamos a seguir um subconjunto suficiente para escrever qualquer algoritmo e estruturas de dados. Note que o código escrito nesse subconjunto pode ficar um pouco mais extenso e não ser considerado pythônico (código idiomático em Python).
 
 
-## Tipos de dados e operações pré-definidas
+## Tipos e operações pré-definidas
 
 Nesta seção apresentamos alguns dos principais tipos pré-definidos em Python e algumas operações sobre esses tipos.
 
@@ -380,7 +380,7 @@ for i in range(3):
 
 &nbsp;
 
-**Tipos misturados**
+**Mistura de tipos**
 
 Nós vimos na seção \ref{sistema-tipos} que Python é geralmente utilizada como uma linguagem com vinculação dinâmica de tipo, isto é, os tipos são associados aos valores, não as variáveis. Uma consequência desse fato é que os valores em uma lista podem ter tipos distintos, ou mesmo mudarem de tipo, como no exemplo a seguir:
 
@@ -417,7 +417,7 @@ Nessa seção apresentamos as principais estruturas de controle do Python.
 
 ### Funções
 
-A funções em Python são definidas com a palavra chave `def`{.python}. A palavra chave `return`{.python} é usada para indicar o valor produzido pela função e pode ser usada mais que uma vez no corpo da função. Funções que não produzem valores explicitamente (não usa `return`{.python}) produzem como saída o valor `None`{.python}. O exemplo a seguir mostra a definição de uma função que indica se um número inteiro é par:
+A funções em Python são definidas com a palavra chave `def`{.python}. A palavra chave `return`{.python} é usada para indicar o valor produzido pela função e pode ser usada mais que uma vez no corpo da função. Funções que não produzem valores explicitamente (não usam `return`{.python}) produzem como saída o valor `None`{.python}. O exemplo a seguir mostra a definição de uma função que indica se um número inteiro é par:
 
 ```python
 includefile src/par.py
@@ -457,7 +457,7 @@ No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}.
 
 ## Definição de tipos de dados
 
-Python é uma linguagem multiparadigma, mas a forma de criação de tipos é através de classes. De fato, quase tudo em Python é um objeto, com atributos e métodos. Por exemplo, valores inteiros são objetos e podemos invocar métodos com eles
+Python é uma linguagem multiparadigma, mas a forma de criação de tipos é através de classes. De fato, quase tudo em Python é um objeto, com atributos e métodos. Por exemplo, valores inteiros são objetos e podemos invocar métodos com eles:
 
 ```python
 >>> # Invoca explicitamente o método __add__ (corresponde a operação +)
@@ -465,88 +465,33 @@ Python é uma linguagem multiparadigma, mas a forma de criação de tipos é atr
 3
 ```
 
-Definir novas classes implica em pensar em construtores, superclasse, encapsulamento, etc, essas coisas não são adequadas para iniciantes. Por isso, não vamos ver a forma comumente utilizada para criar classes em Python, mas sim, duas formas simplificadas.
+Definir novas classes implica em pensar em construtores, superclasse, encapsulamento, etc, essas coisas não são adequadas para iniciantes. Por isso, não vamos ver a forma geral utilizada para criar classes em Python, mas sim, duas formas simplificadas.
 
 
 ### Estruturas
 
 Uma forma simplificada de declarar uma classe é usando o decorador [`@dataclass`](https://docs.python.org/3/library/dataclasses.html). Um decorador é um mecanismo de meta-programação utilizado para modificar classes, métodos e atributos. Embora o funcionamento dos decoradores possa ser bastante elaborado, o seu uso em geral é direto e simples.
 
-Utilizamos o decorador `@dataclass`{.python} quando queremos criar uma classe que se comporte de forma semelhante a uma `struct`{.c} em C. Por exemplo, para definir uma classe que representa um aluno com RA e nome, fazemos
+Utilizamos o decorador `@dataclass`{.python} quando queremos criar uma classe que se comporte de forma semelhante a uma `struct`{.c} em C. O exemplo a seguir mostra a definição de uma classe e o seu uso em uma função:
 
 ```python
-from dataclasses import dataclass
-
-@dataclass
-class Aluno:
-    ra: int
-    nome: str
+includefile src/futebol.py
 ```
 
-Podemos usar essa classe da seguinte forma
-
-```python
->>> # Instanciação
->>> a = Aluno(12345, 'José da Silva')
-
->>> # Acesso aos campos
->>> a.ra
-12345
->>> a.nome
-'José da Silva'
-
->>> # Alteração dos campos
->>> a.nome = 'José da Silva Andrade'
-
->>> # Exibição
->>> a
-Aluno(ra=1234, nome='José da Silva Andrade')
-
->>> # Conversão para string
->>> str(a)
-"Aluno(ra=1234, nome='José da Silva Andrade')"
-
->>> # Comparação por igualdade - feita campo a campo
->>> a == a
-True
->>> a == Aluno(1234, 'José da Silva')
-False
->>> a == Aluno(1234, 'José da Silva Andrade')
-True
-```
+Quando uma classe é criada com `@dataclass`{.python}, por padrão é definido um construtor, que recebe todos os campos como parâmetro na ordem que eles foram definidos, o operador de igualdade (`==`{.python}), que compara os valores de cada campo, as funções `str`{.python} e `repr`{.python}, entre outras operações.
 
 
 ### Enumerações
 
-Outra forma simplificada para criar classe é usando o [Enum](https://docs.python.org/3/library/enum.html). Usamos essa forma quando queremos criar um tipo enumerado, isto é, quando os valores permitidos para o tipo pode ser enumerados explicitamente. Classes criadas com esse mecanismos são semelhantes a tipos criados com `enum`{.c} em C. Por exemplo, vamos criar um tipo para representar as cores de um semáforo (observe que por convenção, escrevemos os valores enumerados em maiúsculas).
+Outra forma simplificada para criar classe é usando o [Enum](https://docs.python.org/3/library/enum.html). Usamos essa forma quando queremos criar um tipo enumerado, isto é, quando os valores permitidos para o tipo podem ser enumerados explicitamente. Classes criadas com esse mecanismos são semelhantes a tipos criados com `enum`{.c} em C. No exemplo a seguir, mostramos a declaração é uso de uma classe para um tipo enumerado (observe que por convenção, escrevemos os valores enumerados em maiúsculas).
 
 ```python
-from enum import Enum, auto
-
-class Cor(Enum):
-    VERMELHO = auto()
-    AMARELO = auto()
-    VERDE = auto()
+includefile src/cor.py
 ```
 
-Podemos usar essa classe da seguinte forma
+Além do campo `name`{.python}, cada valor da enumeração também tem um campo `value`{.python}, que é um valor inteiro gerado automaticamente (podemos indicar os valores de cada item da enumeração diretamente ao invés de usar o `auto`{.python} na declaração).
 
-```python
->>> # Comparação
->>> cor = Cor.VERMELHO
->>> cor == Cor.AMARELO
-False
->>> Cor.VERMELHO == cor
-True
-
->>> # Consulta o valor e nome
->>> Cor.VERMELHO.value
-1
->>> Cor.AMARELO.value
-2
->>> Cor.VERMELHO.name
-'VERMELHO'
-```
+O `mypy` é bastante robusto na verificação do uso de enumerações, especialmente se todos os valores estão sendo considerados. Use o verificador [online](https://mypy-play.net) do `mypy` e teste o código anterior removendo algum dos casos e observe o erro gerado.
 
 
 ### Uniões {#uniao}
