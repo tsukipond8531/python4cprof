@@ -1,5 +1,7 @@
 def indice_maximo(valores: list[float]) -> int:
     '''Encontra o índice do valor máximo em valores.
+    Caso o valor máximo ocorra em mais de um índice,
+    o menor índice é devolvido.
 
     Requer que valores não seja vazio.
 
