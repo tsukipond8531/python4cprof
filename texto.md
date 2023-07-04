@@ -528,7 +528,6 @@ TODO
 
 ## Entrada e saída
 
-
 A principal função de entrada em Python é a função `input`{.python}, que recebe um argumento (mensagem a ser exibida) e retorna uma linha lida (string) da entrada padrão. O Python não tem funções para fazer entrada de dados formatada.
 
 O Python tem diversas funções de saída (incluindo saída formatada), a mais comum é a função `print`{.python}. A função `print`{.python} recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str`{.python} e exibe os valores separando-os por espaço e adicionando um final de linha (esse comportamento pode ser alterado).
@@ -537,6 +536,7 @@ O Python tem diversas funções de saída (incluindo saída formatada), a mais c
 # Exemplos {#exemplos}
 
 Nesta seção mostramos alguns exemplos de algoritmos e estruturas de dados implementados em Python.
+
 
 ## Ordenação por intercalação
 
@@ -554,23 +554,21 @@ includefile src/lista_estatica.py
 
 # Convenções de código
 
-Essas são algumas convenções para escrita de código em Python (de acordo com <https://peps.python.org/pep-0008/>):
+Essas são algumas [convenções](https://peps.python.org/pep-0008/) oficiais para escrita de código em Python.
 
-- Indentação usando 4 espaços;
+- Indente o código usando 4 espaços, não utilize tabulações;
 
-- Não utilizar tabulações;
+- Nomeie tipos da forma `CapitalizedWords`;
 
-- Nomes de tipos da forma `CapitalizedWords`;
+- Nomeie funções e variáveis da forma `lower_case_with_underscores`;
 
-- Nomes de funções e variáveis da forma `lower_case_with_underscores`;
+- Nomeie constantes da forma `UPPER_CASE_WITH_UNDERSCORES`;
 
-- Constantes da forma `UPPER_CASE_WITH_UNDERSCORES`;
-
-- Um `import`{.python} por linha;
+- Use um `import`{.python} por linha;
 
 - Evite espaçamentos extras (`spam(ham[1], {eggs: 2})`{.python} ao invés de `spam( ham[ 1 ], { eggs: 2 } )`{.python});
 
-- Sempre use espaços entre operadores (`c += (a + b) * (a - b)`{.python} ao invés de `c+=(a+b)*(a-b)`{.python})
+- Use espaços entre operadores (`c += (a + b) * (a - b)`{.python} ao invés de `c+=(a+b)*(a-b)`{.python})
 
 
 # Referências
