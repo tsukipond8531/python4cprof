@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 
     // O retorno de scanf não é verificado nas
     // próximas chamadas para simplificar o código.
-    printf("Digite %d separados por espaço.\n", n);
+    printf("Digite %d número(s) separados por espaço.\n", n);
     for (int i = 0; i < n; i++) {
         scanf("%d", &valores[i]);
     }

@@ -1,5 +1,6 @@
 def conta_no_intervalo(valores: list[int], min: int, max: int) -> int:
     '''Devolve a quantidade de items em valores que estão no intervalo [min, max].
+
     Exemplo
     >>> conta_no_intervalo([2, 5, 1, 4, 6, 8], 2, 6)
     4

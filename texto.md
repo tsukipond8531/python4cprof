@@ -1,18 +1,21 @@
 ---
+# vim: set spell spelllang=pt_br:
 title: Visão geral do Python para professores que usam C
-colorlinks: true
+papersize: a4
 geometry:
 - margin=2cm
 - nohead
-papersize: a4
 fontsize: 12
-lang: pt-BR
 numbersections: true
+colorlinks: true
+lang: pt-BR
 ---
 
 # Introdução
 
-Neste texto apresentamos uma visão geral da linguagem Python para professores que vão ministrar algoritmos ou estrutura de dados em Python e que têm experiência com o ensino usando C. O objetivo é esclarecer alguns pontos e mostrar como as construções algorítmicas de C podem ser expressas em Python. Note que o objetivo não é apresentar Python de forma profunda e nem descrever uma metodologia de ensino de algoritmos e estruturas de dados.
+Neste texto apresentamos uma visão geral da linguagem Python para professores que vão ministrar algoritmos ou estrutura de dados em Python e que têm experiência com o ensino usando C. O objetivo é esclarecer alguns pontos e mostrar como as construções algorítmicas de C podem ser expressas em Python. Note que o objetivo não é apresentar todas as construções do Python e nem descrever uma metodologia de ensino de algoritmos e estruturas de dados.
+
+<!-- TODO: A escolha da linguagem depende dos objetivos, se o obj for projetar programas, então Python é uma melhor opção. -->
 
 Começamos com algumas diferenças entre as duas linguagens, depois discutimos as principais construções do Python, em seguida mostramos a implementação de alguns algoritmos e estruturas de dados e por fim apresentamos algumas convenções de código para Python e indicamos referências.
 
@@ -44,11 +47,11 @@ Em Python os operadores relacionais pode ser encadeados, dessa forma é possíve
 
 Em C os tipos das variáveis são especificadas antes do nome da variável. Já em Python, os tipos são especificados após o nome da variável, pela sintaxe `: tipo`{.python}. As especificação do tipo em C é obrigatória, em Python é opcional. Aspectos da semântica de tipos são discutidas em outra seção (TODO: qual?).
 
-Python utiliza a palavra chave `def`{.python} pra definições de funções e o tipo de retorna da função é especificado com `-> tipo`{.python}
+Python utiliza a palavra chave `def`{.python} para definições de funções e o tipo de retorna da função é especificado com `-> tipo`{.python}
 
 Em Python não existe operadores de pós e pré incremento/decremento, mas existem os operadores de atribuição com incremento/decremento (entre outros).
 
-Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}), simples ou triplo (para permitir strings com múltiplas linhas).
+Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}). Strings com múltiplas linhas são especificadas com três aspas os apóstrofos.
 
 Em C existem dois tipos de comentário, o de linha (`//`{.c}) e o de bloco (`/* */`{.c}). Python também tem dois tipos de comentário, o de linha (`#`{.python}) e o de documentação (`''' '''`{.python}), que deve aparecer apenas como primeiro item de uma definição.
 
@@ -68,7 +71,7 @@ A segunda maneira é sem especificar um arquivo, nesse caso é iniciado um modo 
 
 O modo interativo é uma ferramente muito valioso, pois permite a rápida exploração do funcionamento de trechos de código, mas é importante instruir o aluno a usar esse modo apenas para exploração e não desenvolvimento do código final (a escrita do programa deve ser feita seguindo o processo de projeto de programas).
 
-Não é necessário uma função `main` em Python, mas é uma boa prática criar uma e chamá-la explicitamente (como no exemplo).
+Não é necessário uma função `main` em Python, mas é uma boa prática criar uma e chamá-la explicitamente (como no exemplo e a [documentação](https://docs.python.org/3/library/__main__.html)).
 
 O Python tem alguns mecanismos para escrita e execução de testes, o mais simples é o `doctest`. Os exemplos escritos na documentação podem ser executados e verificados de forma automática. Por exemplo, se a função `conta_no_intervalo` está em um arquivo chamado `x.py`, os exemplos podem ser verificados com o comando `python -m doctest -v x.py`.
 
@@ -81,7 +84,7 @@ Historicamente Python tem sido classificada como dinamicamente tipada, isto é, 
 
 O Python 2 não suporta especificação dos tipos para variáveis e funções. A partir do Python 3.0, o suporte para especificação de tipos foi adiciona e a partir da versão 3.5 (lançada em 2015), esse suporte foi aprimorado (e continua sendo).
 
-O interpretador padrão do Python (o que é baixado de <https://python.org>), ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o que o `mypy` identifica como erro.
+O interpretador padrão do Python (<https://python.org>), ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o quê o `mypy` identifica como erro.
 
 ```python
 n: int = 10.2
@@ -98,25 +101,45 @@ O principal efeito dessa diferença é visto na atribuição e na passagem de pa
 
 Como em C "tudo é um valor", todas as atribuições e passagem de parâmetros são feitas por cópia (não tem referência!). No entanto, o uso de ponteiros permite contornar essa limitação, pois a cópia de um ponteiro em uma atribuição ou passagem de parâmetro acaba tendo o mesmo efeito de referências múltiplas para o mesmo valor.
 
-Já em Python como ["tudo é uma referência"](https://docs.python.org/3/tutorial/classes.html#a-word-about-names-and-objects), todas as atribuições e passagem de parâmetros são feitas por referência. No exemplo a seguir, quanto `x` é atribuído para `y`, `y` passa a referenciar o mesmo valor referenciado por `x`. Em seguida, quando um novo valor é atribuído para `x`, `x` passa a referenciar esse novo valor e `y` não é alterado.
+Já em Python como ["tudo é uma referência"](https://docs.python.org/3/tutorial/classes.html#a-word-about-names-and-objects), todas as atribuições e passagem de parâmetros são feitas por referência. Os operadores `is`{.python} e `is not`{.python} são usados para verificar se duas referências são iguais (referenciam o mesmo objeto). O exemplo a seguir mostra como as atribuições de referências funcionam e a diferença entre igualdade de referências e igualdade de valores.
 
 ```python
-x = 10
-y = x
-x = 2
+>>> x = [1, 4]
+>>> # y passa a referenciar o mesmo valor referenciado por x
+>>> y = x
+>>> # is produz True se as referências referenciam o mesmo valor
+>>> x is y
+True
+>>> # == produz True se os dois valores referenciados são iguais
+>>> x == y
+True
+
+>>> # Alteração da lista referenciada por x, que também é referenciada por y
+>>> x.append(6)
+>>> x
+[1, 4, 6]
+>>> y
+[1, 4, 6]
+>>> x is y
+True
+>>> x == y
+True
+
+>>> # x passa a referenciar uma nova lista, y não é alterado
+>>> x = [1, 4, 6]
+>>> y
+    [1, 4, 6]
+>>> # Os valores referenciados por x e y são iguais
+>>> x == y
+True
+>>> # As referências não são iguais
+>>> x is y
+False
+>>> x is not y
+True
 ```
 
-Considere agora o seguinte exemplo
-
-```python
-x = [1, 4]
-y = x
-x.append(6)
-```
-
-Após a atribuição `y = x`{.python}, `x`{.python} e `y`{.python} referenciam a mesma lista, dessa forma, a alteração da lista por `x.append(6)`{.python} é refletida em `y` pois `x` e `y` referenciam a mesma lista.
-
-Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, tuplas, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas, conjuntos, dicionários e outros tipos são mutáveis (é possível alterar uma lista). Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
+Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, tuplas, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas, conjuntos, dicionários e outros tipos são mutáveis. Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
 
 Suponha que tivéssemos que implementar um TAD de dicionário (string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderíamos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
 
@@ -128,7 +151,7 @@ Suponha que tivéssemos que implementar um TAD de dicionário (string para intei
 bool busca_chave(Dicionario *dic, char* chave, int* valor);
 ```
 
-Em Python não é possível fazer desse jeito. Considere uma função com a assinatura
+Em Python não é possível fazer dessa forma. Considere uma função com a assinatura
 
 ```python
 def busca_chave(dic: Dicionario, chave: str, valor: int) -> bool
@@ -148,7 +171,7 @@ Em Python todos os objetos são alocados implicitamente no heap. A desalocação
 
 A biblioteca padrão de C é pequena quando comparada com outras linguagens. Ela inclui diversas funções para comunicação com o sistema operacional, alguns funções para strings e números e poucas funções algorítmicas e de estruturas de dados.
 
-Por outro lado, o Python tem uma biblioteca padrão bastante extensa, que é um dos motivos pelos quais o Python é bastante utilizado. No entanto, também pode ser motivo de preocupação para alguns professores, pois existe a possibilidade dos alunos usarem as funcionalidade prontas e deixarem de implementar funcionalidades que são importante para o aprendizado. Mas isso não precisa ser dessa forma, o professor pode deixar claro o que pode ou não ser usado e o que é importante implementar.
+Por outro lado, o Python tem uma [biblioteca](https://docs.python.org/3/library/index.html) padrão bastante extensa, que é um dos motivos pelos quais o Python é bastante utilizado. No entanto, também pode ser motivo de preocupação para alguns professores, pois existe a possibilidade dos alunos usarem as funcionalidade prontas e deixarem de implementar coisas que são importante para o aprendizado. Mas isso não precisa ser dessa forma, o professor pode deixar claro o que pode ou não ser usado e o que é importante implementar.
 
 Nas próximas duas seção mostramos um subconjunto do Python e como esse subconjunto pode ser usado na implementação de alguns algoritmos e estruturas de dados.
 
@@ -167,9 +190,9 @@ Nesta seção apresentamos alguns dos principais tipos pré-definidos em Python 
 
 ### Números
 
-Os principais tipos numéricos em Python são `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
+Os principais [tipos numéricos](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex) em Python são `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
 
-Além das quadro operações básicas, outras operações comuns em Python com números são a de módulo (`%`{.python}), exponenciação (`**`{.python}) e piso da divisão (`//`{.python}). O operador `/`{.python} sempre gera um `float`{.python} como resposta, mesmo se os operandos forem inteiros. Outras operações matemáticas estão disponíveis no módulo [`math`](https://docs.python.org/3/library/math.html).
+Além das quatro operações básicas, outras operações comuns em Python com números são a de módulo (`%`{.python}), exponenciação (`**`{.python}) e piso da divisão (`//`{.python}). O operador `/`{.python} sempre gera um `float`{.python} como resposta, mesmo se os operandos forem inteiros. Outras operações matemáticas estão disponíveis no módulo [`math`](https://docs.python.org/3/library/math.html).
 
 Em operações aritméticas que envolvem inteiros e floats, os inteiros são convertidos para floats antes da execução das operações.
 
@@ -201,19 +224,21 @@ A seguir mostramos alguns exemplos com valores numéricos.
 3
 >>> round(3.5)
 4
+>>> round(3.5134, 2)
+3.51
 >>> import math
 >>> math.floor(4.2)
 4
 >>> math.ceil(4.2)
 5
 
->>> # Conversão int <-> float
+>>> # Conversão entre int e float
 >>> int(7.6)
 7
 >>> float(4)
 4.0
 
->>> # Conversão número <-> str
+>>> # Conversão entre números e str
 >>> str(10)
 '10'
 >>> int('123')
@@ -227,7 +252,7 @@ A seguir mostramos alguns exemplos com valores numéricos.
 
 ### Booleano
 
-Os booleanos são representados pelo tipo `bool`{.python}, e podem assumir os valores `True`{.python} ou `False`{.python}. As operações com booleanos são `not`{.python}, `and`{.python} e `or`{.python}.
+Os [booleanos](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex) são representados pelo tipo `bool`{.python}, e podem assumir os valores `True`{.python} ou `False`{.python}. As operações com booleanos são `not`{.python}, `and`{.python} e `or`{.python}.
 
 ```python
 >>> not 3 > 5
@@ -239,7 +264,7 @@ False
 
 ### String
 
-As strings são representadas pelo tipo `str`{.python} (armazenadas em utf-8). As strings são imutáveis em Python. Algumas operações comuns com strings são mostradas a seguir.
+As [strings](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str) são representadas pelo tipo `str`{.python} (armazenadas em utf-8). As strings são imutáveis em Python. Algumas operações comuns com strings são mostradas a seguir.
 
 ```python
 >>> # Concatenação
@@ -250,7 +275,7 @@ As strings são representadas pelo tipo `str`{.python} (armazenadas em utf-8). A
 >>> 'abc' * 3
 'abcabcabc'
 
->>> # Remoção de espaços antes e depois
+>>> # Remoção de espaços na direita e esquerda
 >>> ' alguns espaços  '.strip()
 'alguns espaços'
 >>> # Versão com chamada na forma de função ao invés de método
@@ -271,7 +296,7 @@ O Python não tem um tipo específico para representar um caractere, strings com
 
 ### Lista {#lista}
 
-O tipo mais comum para sequência de valores é o tipo `list`{.python}. O tipo `list`{.python} representa arranjos dinâmicos (os elementos são contíguos). Python não tem um tipo para arranjos de tamanho fixo. Os elementos de `list`{.python} são indexados a partir de `0`{.python} e o acesso é checado, se o índice estiver fora da faixa, uma exceção é lançada. Algumas operações com listas são mostradas a seguir.
+O tipo mais comum para [sequência](https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range) de valores é o tipo `list`{.python}. O tipo `list`{.python} representa arranjos dinâmicos (os elementos são contíguos). Python não tem um tipo para arranjos de tamanho fixo. Os elementos de `list`{.python} são indexados a partir de `0`{.python} e o acesso é checado, se o índice estiver fora da faixa, uma exceção é lançada. Algumas operações com listas são mostradas a seguir.
 
 ```python
 >>> # Inicialização com alguns elementos
@@ -348,9 +373,9 @@ Assim como o tipo `str`{.python}, o tipo `list`{.python} também tem operação 
 [10, 0, 0, 0, 2]
 ```
 
-Apesar de útil, é preciso cuidado para usar essa operação. A questão é que, conforme discutido nas seções \ref{sistema-tipos} e \ref{atribuicao}, todos os tipos em Python são tipos referências, dessa forma, quando os elementos de uma lista são repetidos, o que de fato está sendo repetido (copiado) são as referências para os elementos. Para tipos imutáveis, como no exemplo anterior, isso não é um problema, mas para tipos mutáveis, isso pode gerar resultados indesejáveis.
+Apesar de útil, é preciso cuidado para usar essa operação. A questão é que, conforme discutido nas seções \ref{sistema-tipos} e \ref{atribuicao}, todos os tipos em Python são tipos referências, dessa forma, quando os elementos de uma lista são repetidos, o que de fato está sendo repetido (copiado) são as referências para os elementos. Para tipos imutáveis, como no exemplo anterior, isso não é um problema, mas para tipos mutáveis, isso pode gerar resultados inesperados.
 
-A seguir fazermos uma tentativa de inicializar uma lista de listas (arranjo bidimensional 3 x 3). Usamos a variável `linha` para ficar mais claro o ponto que vamos destacar, mas não é necessário, poderíamos escrever `m = [[0, 0, 0]] * 3`{.python} e a questão seria o mesmo.
+A seguir fazermos uma tentativa de inicializar uma lista de listas (arranjo bidimensional 3 x 3). Usamos a variável `linha` para ficar mais claro o ponto que vamos destacar, mas não é necessário, poderíamos escrever `m = [[0, 0, 0]] * 3`{.python} e a questão seria a mesmo.
 
 ```python
 >>> linha = [0, 0, 0]
@@ -359,7 +384,7 @@ A seguir fazermos uma tentativa de inicializar uma lista de listas (arranjo bidi
 [[0, 0, 0], [0, 0, 0], [0, 0,0]]
 ```
 
-Por enquanto, parece que está tudo certo. Mas note que `linha`, `m[0]`, `m[1]` e `m[2]` referenciam a mesma lista (objeto), então uma mudança feita nessa lista por qualquer dessas variáveis, será refletida em todas as outras!
+Por enquanto, parece que está tudo certo. No entanto, se notarmos que `linha`, `m[0]`, `m[1]` e `m[2]` referenciam a mesma lista (objeto), então sabemos que uma mudança feita nessa lista por qualquer dessas variáveis, será refletida em todas as outras!
 
 ```python
 >>> m[0][0] = 3
@@ -367,7 +392,7 @@ Por enquanto, parece que está tudo certo. Mas note que `linha`, `m[0]`, `m[1]` 
 [[3, 0, 0], [3, 0, 0], [3, 0, 0]]
 ```
 
-Como proceder nesse caso? Existem formas compactas para fazer isso em Python, mas usam construções que não discutimos nesse texto. Usando apenas as construções mais básicas podemos fazer
+Como proceder nesse caso? Existem formas compactas para fazer isso em Python, mas usam construções que não discutiremos nesse texto. Usando apenas as construções mais básicas podemos fazer
 
 ```python
 m = []
@@ -417,7 +442,7 @@ Nessa seção apresentamos as principais estruturas de controle do Python.
 
 ### Funções
 
-A funções em Python são definidas com a palavra chave `def`{.python}. A palavra chave `return`{.python} é usada para indicar o valor produzido pela função e pode ser usada mais que uma vez no corpo da função. Funções que não produzem valores explicitamente (não usam `return`{.python}) produzem como saída o valor `None`{.python}. O exemplo a seguir mostra a definição de uma função que indica se um número inteiro é par:
+A funções em Python são definidas com a palavra chave `def`{.python}. A palavra chave `return`{.python} é usada para indicar o valor produzido pela função e pode ser usada mais que uma vez no corpo da função. Funções que não produzem valores explicitamente (não usam `return`{.python}) produzem como saída o valor `None`{.python}. O exemplo a seguir mostra a definição de uma função:
 
 ```python
 includefile src/par.py
@@ -426,7 +451,7 @@ includefile src/par.py
 
 ### Seleção
 
-A principal estruturas de seleção do Python é o `if`{.python}, (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma similar ao `switch/case`{.c} do C, mas mais geral).
+A principal estrutura de seleção do Python é o `if`{.python}, (o Python 3.10 introduziu a construção `match/case`{.python}, que é de certa forma similar ao `switch/case`{.c} do C, mas mais geral).
 
 Assim como no `if`{.c} do C, a cláusula `else`{.python} do `if`{.python} do Python é opcional. Para evitar o aumento de níveis na indentação de `if`{.python}s aninhamos, o Python permite a união de um `else`{.python} seguido de `if`{.python} com a palavra chave `elif`{.python}. O exemplo a seguir mostra o uso do `if`{.python}.
 
@@ -452,6 +477,8 @@ includefile src/indice_maximo.py
 
 ### Asserção
 
+<!-- TODO: destacar o propósito -->
+
 No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}. O `assert`{.python} pode ser usado com uma ou duas expressões. O Python avalia a primeira expressão, se o resultador for `True`{.python}, a execução continua para a próxima linha, caso contrário, uma exceção é gerada com uma mensagem padrão ou com o resultado da segunda expressão do `assert`{.python} (se existir).
 
 
@@ -460,7 +487,7 @@ No exemplo anterior usamos uma outra estrutura de controle, o `assert`{.python}.
 Python é uma linguagem multiparadigma, mas a forma de criação de tipos é através de classes. De fato, quase tudo em Python é um objeto, com atributos e métodos. Por exemplo, valores inteiros são objetos e podemos invocar métodos com eles:
 
 ```python
->>> # Invoca explicitamente o método __add__ (corresponde a operação +)
+>>> # Invoca explicitamente o método __add__ (operação +)
 >>> (1).__add__(2)
 3
 ```
@@ -501,14 +528,16 @@ TODO
 
 ## Entrada e saída
 
-Python não tem funções para fazer entrada de dados formatada. A principal função de entrada em Python é `input` que recebe um argumento (mensagem a ser exibida) e retorna uma linha lida (string) da entrada padrão. A string lida pode ser convertida para outro tipo posteriormente, no exemplo, a função `int` converte a string para um inteiro (uma exceção é gerada se a conversão não puder ser feita).
 
-Python tem diversas funções de saída (incluindo saída formatada), a mais comum é o `print`. A função `print` recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str` e exibe os valores separando-os por espaço e adicionando um final de linha (esse comportamento pode ser alterado).
+A principal função de entrada em Python é a função `input`{.python}, que recebe um argumento (mensagem a ser exibida) e retorna uma linha lida (string) da entrada padrão. O Python não tem funções para fazer entrada de dados formatada.
+
+O Python tem diversas funções de saída (incluindo saída formatada), a mais comum é a função `print`{.python}. A função `print`{.python} recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str`{.python} e exibe os valores separando-os por espaço e adicionando um final de linha (esse comportamento pode ser alterado).
 
 
 # Exemplos {#exemplos}
 
 TODO
+
 
 # Convenções de código
 
