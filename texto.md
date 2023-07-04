@@ -536,7 +536,13 @@ O Python tem diversas funções de saída (incluindo saída formatada), a mais c
 
 # Exemplos {#exemplos}
 
-TODO
+Nesta seção mostramos exemplos de algoritmos e estruturas de dados conhecidas implementadas em Python.
+
+## Ordenação por intercalação
+
+```python
+includefile src/ordena_intercalacao.py
+```
 
 
 # Convenções de código
