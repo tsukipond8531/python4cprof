@@ -157,7 +157,7 @@ Em Python não é possível fazer dessa forma. Considere uma função com a assi
 def busca_chave(dic: Dicionario, chave: str, valor: int) -> bool
 ```
 
-Se um inteiro é atribuído para `valor` no corpo de `busca_chave`, `valor` passa a referenciar um novo valor, o valor referenciado anteriormente permanece inalterado (números são imutáveis). Discutimos uma forma de resolver essa situação na seção \ref{exemplos}.
+Se um inteiro é atribuído para `valor` no corpo de `busca_chave`, `valor` passa a referenciar um novo valor, o valor referenciado anteriormente permanece inalterado (números são imutáveis). Discutimos uma forma de resolver essa situação na seção \ref{uniao}.
 
 
 ## Gerência de memória
@@ -535,7 +535,22 @@ O `mypy` é bastante robusto na verificação do uso de enumerações, especialm
 
 ### Uniões {#uniao}
 
-TODO
+As [uniões](https://en.wikipedia.org/wiki/Tagged_union) em Python são discriminadas (contém um rótulo que diz o tipo armazenado) e são usadas em diversas situações. O operador `|` (a partir do Python 3.10) é utilizado para especificar a união de tipos e a função `isinstance`{.python} é utilizada para verificar o tipo (rótulo) de um valor. O exemplo a seguir mostra o uso de uniões (` \ `{.python} é usado para permitir que a expressão continue na próxima linha).
+
+```python
+includefile src/embalagem.py
+```
+
+Um uso bastante comum de uniões é na representação de ausência de valores. Por exemplo, um nó em uma lista pode ou não ter um próximo elemento, um nó em uma árvore binária pode ou não ter filhos a direita e a esquerda, uma busca em um dicionário pode ou não encontrar um valor associado com uma chave (veja a seção \ref{atribuicao}), etc. Para ilustrar de forma breve esse uso, mostramos a seguir a assinatura de uma função que busca o valor associado com uma chave em um dicionário, exemplos completos são apresentados na seção \ref{exemplos}.
+
+```python
+def busca_chave(dic: Dicionario, chave: str) -> None | int:
+    '''Devolve o valor associado com chave em dic, ou None se chave não estiver em dic.'''
+```
+
+Assim como para enumerações, o `mypy` também é bastante robusto no tratamento de uniões devido a análise de [refinamento de tipos](https://mypy.readthedocs.io/en/stable/type_narrowing.html). No exemplo da embalagem, o `mypy` só permite que o campo `diametro`{.python} seja acessado através da variável `emb`{.python} se ele puder provar que `emb`{.python} é uma instância de `Rolo`{.python}, que é o caso no exemplo devido ao `if`. Use o verificador [online](https://mypy-play.net) do `mypy` e tente construções inválidas que só seriam identificas pelo Python em tempo de execução e veja que o `mypy` identifica essas construções de forma estática.
+
+O refinamento de tipos é bastante útil, e nos permite, por exemplo, garantir que não haverá acesso a referências nulas em tempo de execução (como mostrado na seção \ref{exemplos})
 
 
 ## Entrada e saída
@@ -554,6 +569,13 @@ Nesta seção mostramos alguns exemplos de algoritmos e estruturas de dados impl
 
 ```python
 includefile src/ordena_intercalacao.py
+```
+
+
+## Busca por chave em dicionário
+
+```python
+includefile src/dicionario.py
 ```
 
 
