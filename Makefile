@@ -14,3 +14,6 @@ ${BUILD}/texto.pdf: ${BUILD}/texto.md
 
 test:
 	python3 -B -m doctest src/*.py && echo OK
+
+check:
+	mypy src/*.py
