@@ -128,7 +128,7 @@ True
 >>> # x passa a referenciar uma nova lista, y não é alterado
 >>> x = [1, 4, 6]
 >>> y
-    [1, 4, 6]
+[1, 4, 6]
 >>> # Os valores referenciados por x e y são iguais
 >>> x == y
 True
@@ -290,6 +290,10 @@ As [strings](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-
 >>> # Quantidade de caracteres (code points)
 >>> len('teste')
 5
+
+>>> # Verificação se uma string está contida em outra
+>>> 'este' in 'um teste simples'
+True
 ```
 
 O Python não tem um tipo específico para representar um caractere, strings com um _code point_ são usadas com esse propósito.
@@ -315,6 +319,14 @@ IndexError: list index out of range
 >>> # Quantidade de elementos - tempo O(1)
 >>> len(lst)
 3
+
+>>> # Verificação de pertinência
+>>> 2 in lst
+True
+>>> 7 in lst
+False
+>>> 7 not in lst
+True
 
 >>> # Inicialização sem nenhum elemento
 >>> lst = [] # ou list()
