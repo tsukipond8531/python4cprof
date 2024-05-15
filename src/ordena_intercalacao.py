@@ -18,7 +18,6 @@ def ordena_intercalacao(valores: list[int], inicio: int, fim: int):
         ordena_intercalacao(valores, m, fim)
         intercala(valores, inicio, m, fim)
 
-
 def intercala(valores: list[int], inicio: int, m: int, fim: int):
     '''Intercala os elementos dos subarranjos valores[inicio:m] e valores[m:fim].
 
