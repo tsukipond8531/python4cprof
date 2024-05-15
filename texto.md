@@ -6,7 +6,6 @@ geometry:
 - margin=2cm
 - nohead
 fontsize: 12
-numbersections: true
 colorlinks: true
 lang: pt-BR
 ---
@@ -210,10 +209,16 @@ A seguir mostramos alguns exemplos com valores numéricos.
 3.5
 
 >>> # Piso da divisão
->>> 7 // 2
-3
+>>> 14 // 3
+4
 >>> 5 // 1.3
 3.0
+
+>>> # Resto da divisão
+>>> 14 % 3
+2
+>>> 5 % 1.3
+1.0999999999999999
 
 >>> # Exponenciação
 >>> 2 ** 80
