@@ -1,5 +1,6 @@
 def sinal(n: int) -> int:
-    '''Devolve o sinal de n, isto é, 1 se n > 0, -1 se n < 1, 0 se n == 0.
+    '''
+    Devolve o sinal de *n*, isto é, 1 se n > 0, -1 se n < 1, 0 se n == 0.
 
     Exemplos
     >>> sinal(3)

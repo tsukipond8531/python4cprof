@@ -11,7 +11,14 @@ class Desempenho:
     saldo: int
 
 def atualiza_desempenho(d: Desempenho, gols_pro: int, gols_contra: int):
-    '''Atualiza o desempenho d considerando o resultado gols_pro x gols_contra.
+    '''
+    Atualiza o desempenho *d* considerando *gols_pro* e *gols_contra*.
+
+    O saldo de gols é atualizado somando *gols_pro* e subtraindo *gols_contra*.
+
+    Se *gols_pro > gols_contra*, o número de pontos aumenta em 3.
+
+    Se *gols_pro == gols_contra*, o número de pontos aumenta em 1.
 
     Exemplos
     >>> d = Desempenho('Maringá', 0, 0)

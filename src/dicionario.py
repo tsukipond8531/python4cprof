@@ -8,7 +8,8 @@ class Item:
 
 @dataclass
 class Dicionario:
-    '''Um dicionario que associa strings com inteiros.
+    '''
+    Um dicionario que associa strings com inteiros.
 
     Este dicionário mantém uma lista de pares (chave, valor) em uma lista. As
     adições são feitas no final da lista e as pesquisas são feitas de forma
@@ -19,12 +20,15 @@ class Dicionario:
     items: list[Item]
 
 def cria_dicionario() -> Dicionario:
-    '''Cria um novo dicionário'''
+    '''
+    Cria um novo dicionário
+    '''
     return Dicionario([])
 
 def adiciona(dic: Dicionario, chave: str, valor: int) -> bool:
-    '''Associa chave com valor em dic se ainda não existe valor associado com chave.
-    Produz True se a associação foi criada, False caso contrário.
+    '''
+    Associa *chave* com *valor* em *dic* se ainda não existe valor associado
+    com *chave*. Produz True se a associação foi criada, False caso contrário.
 
     Exemplos
     >>> dic = cria_dicionario()
@@ -42,7 +46,9 @@ def adiciona(dic: Dicionario, chave: str, valor: int) -> bool:
         return False
 
 def busca_chave(dic: Dicionario, chave: str) -> None | int:
-    '''Devolve o valor associado com chave em dic, ou None se chave não estiver em dic.
+    '''
+    Devolve o valor associado com *chave* em *dic*, ou None se *chave* não
+    estiver em *dic*.
 
     Exemplos
     >>> dic = cria_dicionario()

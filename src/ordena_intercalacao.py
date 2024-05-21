@@ -1,5 +1,6 @@
 def ordena_intercalacao(valores: list[int], inicio: int, fim: int):
-    '''Ordena o subarranjo valores[inicio:fim] em ordem não decrescente.
+    '''
+    Ordena o subarranjo *valores[inicio:fim]* em ordem não decrescente.
 
     A ordenação é feita usando o algoritmo de intercalação.
 
@@ -19,7 +20,8 @@ def ordena_intercalacao(valores: list[int], inicio: int, fim: int):
         intercala(valores, inicio, m, fim)
 
 def intercala(valores: list[int], inicio: int, m: int, fim: int):
-    '''Intercala os elementos dos subarranjos valores[inicio:m] e valores[m:fim].
+    '''
+    Intercala os elementos dos subarranjos *valores[inicio:m]* e *valores[m:fim]*.
 
     Requer que 0 <= inicio < m < fim <= len(valores) e que os subarranjos
     valores[inicio:m] e valores[m:fim] estajam ordenados.

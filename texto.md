@@ -16,7 +16,7 @@ Neste texto apresentamos uma visão geral da linguagem Python para professores q
 
 <!-- TODO: A escolha da linguagem depende dos objetivos, se o obj for projetar programas, então Python é uma melhor opção. -->
 
-Começamos com algumas diferenças entre as duas linguagens, depois discutimos as principais construções do Python, em seguida mostramos a implementação de alguns algoritmos e estruturas de dados e por fim apresentamos algumas convenções de código para Python e indicamos referências.
+Começamos com algumas diferenças entre as duas linguagens, depois discutimos as principais construções do Python, em seguida mostramos a implementação de alguns algoritmos e estruturas de dados e por fim apresentamos algumas convenções de código para Python e indicamos algumas referências.
 
 
 # Diferenças entre Python e C
@@ -44,20 +44,20 @@ Os blocos em Python inciam com ":" e são delimitados pela indentação. As expr
 
 Em Python os operadores relacionais pode ser encadeados, dessa forma é possível escrever `a < b < c`{.python} ao invés de `a < b and b < c`{.python}.
 
-Em C os tipos das variáveis são especificadas antes do nome da variável. Já em Python, os tipos são especificados após o nome da variável, pela sintaxe `: tipo`{.python}. As especificação do tipo em C é obrigatória, em Python é opcional. Aspectos da semântica de tipos são discutidas em outra seção (TODO: qual?).
+Em C os tipos das variáveis são especificadas antes do nome da variável. Já em Python, os tipos são especificados após o nome da variável, pela sintaxe `: tipo`{.python}. As especificação do tipo em C é obrigatória, em Python é opcional. Aspectos da semântica de tipos são discutidas na seção \ref{sistema-tipos}.
 
 Python utiliza a palavra chave `def`{.python} para definições de funções e o tipo de retorna da função é especificado com `-> tipo`{.python}
 
 Em Python não existe operadores de pós e pré incremento/decremento, mas existem os operadores de atribuição com incremento/decremento (entre outros).
 
-Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}). Strings com múltiplas linhas são especificadas com três aspas os apóstrofos.
+Strings em Python podem ser especificadas com aspas (`"`{.python}) ou apóstrofo (`'`{.python}). Strings com múltiplas linhas são especificadas com três aspas ou apóstrofos.
 
 Em C existem dois tipos de comentário, o de linha (`//`{.c}) e o de bloco (`/* */`{.c}). Python também tem dois tipos de comentário, o de linha (`#`{.python}) e o de documentação (`''' '''`{.python}), que deve aparecer apenas como primeiro item de uma definição.
 
 
 ## Forma de execução
 
-C é usado comumente como um linguagem compilada. Isso implica que para testar qualquer trecho de código em C é necessário escrever um programa completo (com função `main`), compilar e depois executar o programa. Além disso, para exibir o valor de uma variável é necessário chamar uma função como `print` explicitamente (também é possível consultar os valores das variáveis usando um depurador).
+C é usado comumente como um linguagem compilada. Isso implica que para testar qualquer trecho de código em C é necessário escrever um programa completo (com função `main`), compilar e depois executar o programa. Além disso, para exibir o valor de uma variável é necessário chamar uma função como `printf` explicitamente (também é possível consultar os valores das variáveis usando um depurador).
 
 Já o Python é usado comumente como uma linguagem interpretada de duas maneira, a primeira é especificando o nome de um arquivo `.py`, nesse caso o código do arquivo é executado diretamente (compilado para código de uma máquina virtual e depois executado).
 
@@ -70,28 +70,28 @@ A segunda maneira é sem especificar um arquivo, nesse caso é iniciado um modo 
 
 O modo interativo é uma ferramente muito valioso, pois permite a rápida exploração do funcionamento de trechos de código, mas é importante instruir o aluno a usar esse modo apenas para exploração e não desenvolvimento do código final (a escrita do programa deve ser feita seguindo o processo de projeto de programas).
 
-Não é necessário uma função `main` em Python, mas é uma boa prática criar uma e chamá-la explicitamente (como no exemplo e a [documentação](https://docs.python.org/3/library/__main__.html)).
+Não é necessário uma função `main` em Python, mas é uma boa prática criar uma e chamá-la explicitamente (como no exemplo do início dessa seção -- [documentação](https://docs.python.org/3/library/__main__.html)).
 
 O Python tem alguns mecanismos para escrita e execução de testes, o mais simples é o `doctest`. Os exemplos escritos na documentação podem ser executados e verificados de forma automática. Por exemplo, se a função `conta_no_intervalo` está em um arquivo chamado `x.py`, os exemplos podem ser verificados com o comando `python -m doctest -v x.py`.
 
 
 ## Sistema de tipos {#sistema-tipos}
 
-C é comumente classificada como estaticamente tipada, isto é, os tipos são vinculados as variáveis em tempo de compilação (note que `void*`{.c} é um escape para essa regra que é amplamente utilizado pelas funções da biblioteca padrão, entre elas `malloc/free`{.c}). Os compiladores de C detectam muitos erros de tipo durante a compilação, no entanto, C permite a conversão implícita entre muitos tipos de dados, o diminui a confiabilidade e pode ser confuso para o aluno iniciante (por exemplo, `double`{.c} e `float`{.c} para `int`{.c}, arranjos para ponteiros, etc).
+C é comumente classificada como estaticamente tipada, isto é, os tipos são vinculados as variáveis em tempo de compilação (note que `void*`{.c} é um escape para essa regra que é amplamente utilizado pelas funções da biblioteca padrão, entre elas `malloc/free`{.c}). Os compiladores de C detectam muitos erros de tipo durante a compilação, no entanto, C permite a conversão implícita entre muitos tipos de dados, o que diminui a confiabilidade e pode ser confuso para o aluno iniciante (por exemplo, `double`{.c} e `float`{.c} para `int`{.c}, arranjos para ponteiros, etc).
 
 Historicamente Python tem sido classificada como dinamicamente tipada, isto é, os tipos são vinculados em tempo de execução aos valores e não as variáveis. Isso implica, por exemplo, que uma mesma variável pode em momentos distintos armazenar valores de tipos distintos. Python tem algumas conversões implícitas de valores (como `int`{.python} para `float`{.python}), mas menos do que C, por esse e outro motivos, o Python é considerado mais fortemente tipada do que C.
 
-O Python 2 não suporta especificação dos tipos para variáveis e funções. A partir do Python 3.0, o suporte para especificação de tipos foi adiciona e a partir da versão 3.5 (lançada em 2015), esse suporte foi aprimorado (e continua sendo).
+Atualmente o Python suporta a especificação de tipos tanto de variáveis como funções. Essa característica foi adicionada inicialmente no Python 3.5 (lançado em 2015) e têm sido aprimorado a cada versão (o Python 2 não suporta especificação de tipos).
 
-O interpretador padrão do Python (<https://python.org>), ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o quê o `mypy` identifica como erro.
+O interpretador padrão do Python (<https://python.org>) ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o quê o `mypy` identifica como erro.
 
 ```python
 n: int = 10.2
 ```
 
-Dessa forma, usando o `mypy`, podemos desenvolver os programas em Python como se eles fossem estaticamente tipados, mesmo que de fato as anotações de tipo não alterem a forma como o programa é executado. O sistema de tipos do `mypy` é muito poderoso e permite expressar muitas restrições estaticamente. Vamos discutir mais sobre esse aspecto na seção \ref{exemplos}.
+Dessa forma, usando o `mypy`, podemos desenvolver os programas em Python como se eles fossem estaticamente tipados, mesmo que de fato as anotações de tipo não alterem a forma como o programa é executado. O sistema de tipos do `mypy` é muito poderoso e permite expressar muitas restrições estaticamente. A seção \ref{exemplos} apresenta mais informações sobres essas questões.
 
-Outro aspecto diferente entre as duas linguagem é que em C todos os tipos são "tipos valores" enquanto que em Python os tipos são "tipos referências" (<https://en.wikipedia.org/wiki/Value_type_and_reference_type>).
+Outro aspecto diferente entre as duas linguagem é que em C todos os tipos são "tipos valores", enquanto que em Python os tipos são "tipos referências" (<https://en.wikipedia.org/wiki/Value_type_and_reference_type>).
 
 O principal efeito dessa diferença é visto na atribuição e na passagem de parâmetros. Discutimos essa questão na próxima seção.
 
@@ -140,7 +140,7 @@ True
 
 Os tipos em Python podem ser mutáveis ou imutáveis. Os tipos numéricos, strings, tuplas, entre outros, são imutáveis, ou seja, dado uma referência para um número, não é possível alterar esse número. Já as listas, conjuntos, dicionários e outros tipos são mutáveis. Uma consequência disso é que se um valor de tipo imutável é passado como parâmetro, não é possível devolver um resultado alterando esse valor (pois o tipo é imutável). Outra consequência é que para passar parâmetros de tipos mutáveis por cópia, é preciso fazer a cópia explicitamente.
 
-Suponha que tivéssemos que implementar um TAD de dicionário (string para inteiro) e estivéssemos implementando a função de busca pela chave. Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se o elemento com a chave foi encontrada e o próprio elemento encontrado. Em C, se a função retornasse um `bool`{.c} indicando o resultado da busca, poderíamos utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
+Considere por exemplo a implementação de uma função de busca em um TAD de dicionário (string para inteiro). Os argumentos de entrada seriam o dicionário e a chave e a saída uma indicação se existe um elemento associado com a chave e qual é o elemento. Em C poderíamos definir uma função que devolve `bool`{.c} indicando o resultado da busca e utilizar um argumento do tipo ponteiro para inteiro para indicar o elemento encontrado. A assinatura da função seria algo como
 
 ```c
 /* Devolve true se chave está presente em dic, false caso contrário.
@@ -177,9 +177,9 @@ Nas próximas duas seção mostramos um subconjunto do Python e como esse subcon
 
 # O básico de Python
 
-O Python é uma linguagem extensa e tem uma biblioteca padrão extensa. O sistema de tipos do `mypy` e bastante poderoso e também extenso. Dessa forma, para evitar que os alunos se percam na linguagem e deixem de focar nos fundamentos, é importante delimitar um subconjunto das construções da linguagem para ser utilizado pelos alunos.
+O Python é uma linguagem extensa e tem uma biblioteca padrão extensa. O sistema de tipos do `mypy` é bastante poderoso e também extenso. Dessa forma, para evitar que os alunos se percam na linguagem e deixem de focar nos fundamentos, é importante delimitar um subconjunto das construções da linguagem para ser utilizado pelos alunos.
 
-Apresentamos a seguir um subconjunto suficiente para escrever qualquer algoritmo e estruturas de dados. Note que o código escrito nesse subconjunto pode ficar um pouco mais extenso e não ser considerado pythônico (código idiomático em Python).
+Apresentamos a seguir um subconjunto suficiente para escrever qualquer algoritmo e estruturas de dados. Note que o código escrito nesse subconjunto pode ficar um pouco mais extenso e não ser considerado idiomático (pythônico) pela comunidade.
 
 
 ## Tipos e operações pré-definidas
@@ -191,7 +191,7 @@ Nesta seção apresentamos alguns dos principais tipos pré-definidos em Python 
 
 Os principais [tipos numéricos](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex) em Python são `int`{.python} e `float`{.python}. O tipo `int`{.python} representa inteiros de tamanho arbitrário enquanto `float`{.python} números de pontos flutuantes no padrão IEEE 754 binary64 (mesmo que o `double`{.c} em C).
 
-Além das quatro operações básicas, outras operações comuns em Python com números são a de módulo (`%`{.python}), exponenciação (`**`{.python}) e piso da divisão (`//`{.python}). O operador `/`{.python} sempre gera um `float`{.python} como resposta, mesmo se os operandos forem inteiros. Outras operações matemáticas estão disponíveis no módulo [`math`](https://docs.python.org/3/library/math.html).
+Além das quatro operações básicas, outras operações comuns em Python com números são a de módulo (`%`{.python}), exponenciação (`**`{.python}) e piso da divisão (`//`{.python}). O operador `/`{.python} sempre gera um `float`{.python} como resposta, mesmo que os operandos sejam inteiros. Outras operações matemáticas estão disponíveis no módulo [`math`](https://docs.python.org/3/library/math.html).
 
 Em operações aritméticas que envolvem inteiros e floats, os inteiros são convertidos para floats antes da execução das operações.
 
@@ -214,11 +214,13 @@ A seguir mostramos alguns exemplos com valores numéricos.
 >>> 5 // 1.3
 3.0
 
->>> # Resto da divisão
+>>> # Módulo
 >>> 14 % 3
 2
 >>> 5 % 1.3
 1.0999999999999999
+>>> -7 % 5
+3
 
 >>> # Exponenciação
 >>> 2 ** 80
@@ -262,8 +264,11 @@ Os [booleanos](https://docs.python.org/3/library/stdtypes.html#numeric-types-int
 ```python
 >>> not 3 > 5
 True
->>> not 3 > 5 and False
-False
+>>> 3 > 5 or 3 < 5
+True
+>>> # and tem prioridade sobre or
+>>> True or False and False
+True
 ```
 
 
@@ -279,8 +284,10 @@ As [strings](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-
 >>> # Repetição
 >>> 'abc' * 3
 'abcabcabc'
+>>> 'nada' * -1
+''
 
->>> # Remoção de espaços na direita e esquerda
+>>> # Remoção de espaços da direita e esquerda
 >>> ' alguns espaços  '.strip()
 'alguns espaços'
 >>> # Versão com chamada na forma de função ao invés de método
@@ -296,7 +303,7 @@ As [strings](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-
 >>> len('teste')
 5
 
->>> # Verificação se uma string está contida em outra
+>>> # Verificação se uma string é substring de outra
 >>> 'este' in 'um teste simples'
 True
 ```
@@ -392,7 +399,7 @@ Assim como o tipo `str`{.python}, o tipo `list`{.python} também tem operação 
 
 Apesar de útil, é preciso cuidado para usar essa operação. A questão é que, conforme discutido nas seções \ref{sistema-tipos} e \ref{atribuicao}, todos os tipos em Python são tipos referências, dessa forma, quando os elementos de uma lista são repetidos, o que de fato está sendo repetido (copiado) são as referências para os elementos. Para tipos imutáveis, como no exemplo anterior, isso não é um problema, mas para tipos mutáveis, isso pode gerar resultados inesperados.
 
-A seguir fazermos uma tentativa de inicializar uma lista de listas (arranjo bidimensional 3 x 3). Usamos a variável `linha` para ficar mais claro o ponto que vamos destacar, mas não é necessário, poderíamos escrever `m = [[0, 0, 0]] * 3`{.python} e a questão seria a mesmo.
+A seguir apresentamos uma tentativa de inicializar uma lista de listas (arranjo bidimensional 3 x 3). Usamos a variável `linha` para ficar mais claro o ponto que vamos destacar, mas não é necessário, poderíamos escrever `m = [[0, 0, 0]] * 3`{.python} e a questão seria a mesmo.
 
 ```python
 >>> linha = [0, 0, 0]
@@ -409,7 +416,7 @@ Por enquanto, parece que está tudo certo. No entanto, se notarmos que `linha`, 
 [[3, 0, 0], [3, 0, 0], [3, 0, 0]]
 ```
 
-Como proceder nesse caso? Existem formas compactas para fazer isso em Python, mas usam construções que não discutiremos nesse texto. Usando apenas as construções mais básicas podemos fazer
+Como proceder nesse caso? Existem formas compactas para fazer isso em Python, mas não são discutidas nesse texto. Usando apenas as construções mais básicas podemos fazer
 
 ```python
 m = []
@@ -479,7 +486,7 @@ includefile src/sinal.py
 
 ### Repetição
 
-O `for`{.c} clássico do C não existe em Python. Em Python o `for`{.python} é usado para fazer iteração pelos elementos de uma estrutura de dados. A outra forma de iteração do Python é o `while`{.python}. O exemplo a seguir mostra o uso do `for`{.python} e do `while`{.python}.
+O `for`{.c} clássico do C não existe em Python. Em Python o `for`{.python} é usado para fazer iteração pelos elementos de uma estrutura de dados. A outra forma de repetição do Python é o `while`{.python}. O exemplo a seguir mostra o uso do `for`{.python} e do `while`{.python}.
 
 ```python
 includefile src/ordena.py
@@ -505,29 +512,54 @@ Python é uma linguagem multiparadigma, mas a forma de criação de tipos é atr
 
 ```python
 >>> # Invoca explicitamente o método __add__ (operação +)
->>> (1).__add__(2)
+>>> x = 1
+>>> x.__add__(2) # ou (1).__add__(2)
 3
 ```
 
-Definir novas classes implica em pensar em construtores, superclasse, encapsulamento, etc, essas coisas não são adequadas para iniciantes. Por isso, não vamos ver a forma geral utilizada para criar classes em Python, mas sim, duas formas simplificadas.
+Antes de vermos a forma geral de definição de classes, vamos ver formas simplificadas que são similares a definição de estruturas e enumerações em C.
 
 
 ### Estruturas
 
 Uma forma simplificada de declarar uma classe é usando o decorador [`@dataclass`](https://docs.python.org/3/library/dataclasses.html). Um decorador é um mecanismo de meta-programação utilizado para modificar classes, métodos e atributos. Embora o funcionamento dos decoradores possa ser bastante elaborado, o seu uso em geral é direto e simples.
 
-Utilizamos o decorador `@dataclass`{.python} quando queremos criar uma classe que se comporte de forma semelhante a uma `struct`{.c} em C. O exemplo a seguir mostra a definição de uma classe e o seu uso em uma função:
+Utilizamos o decorador `@dataclass`{.python} quando queremos criar uma classe que se comporte de forma semelhante a uma `struct`{.c} em C. No exemplo a seguir criamos uma classe ponto e mostramos algumas operações:
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Ponto:
+    x: int
+    y: int
+
+>>> # Construtor
+>>> p = Ponto(10, 20)
+>>> p.x
+10
+>>> p.y
+20
+>>> p.x = p.x + 1
+>>> p
+Ponto(x=11, y=20)
+>>> # Comparação
+>>> p == Ponto(11, 20)
+True
+```
+
+Observe que uma classe criada com `@dataclass`{.python} tem construtor (que recebe todos os campos como parâmetro na ordem que eles foram definidos), operador de igualdade (que compara os valores de cada campo), entre outras operações.
+
+O exemplo a seguir mostra a definição de uma classe e o seu uso em uma função (note a forma dos exemplos):
 
 ```python
 includefile src/futebol.py
 ```
 
-Quando uma classe é criada com `@dataclass`{.python}, por padrão é definido um construtor, que recebe todos os campos como parâmetro na ordem que eles foram definidos, o operador de igualdade (`==`{.python}), que compara os valores de cada campo, as funções `str`{.python} e `repr`{.python}, entre outras operações.
-
 
 ### Enumerações
 
-Outra forma simplificada para criar classe é usando o [Enum](https://docs.python.org/3/library/enum.html). Usamos essa forma quando queremos criar um tipo enumerado, isto é, quando os valores permitidos para o tipo podem ser enumerados explicitamente. Classes criadas com esse mecanismos são semelhantes a tipos criados com `enum`{.c} em C. No exemplo a seguir, mostramos a declaração é uso de uma classe para um tipo enumerado (observe que por convenção, escrevemos os valores enumerados em maiúsculas).
+Outra forma simplificada para criar classe é usando o [Enum](https://docs.python.org/3/library/enum.html). Usamos essa forma quando queremos criar um tipo enumerado, isto é, quando os valores permitidos para o tipo podem ser enumerados explicitamente. Classes criadas com esse mecanismos são semelhantes a tipos criados com `enum`{.c} em C. No exemplo a seguir, mostramos a declaração e uso de uma classe para um tipo enumerado (observe que, por convenção, escrevemos os valores enumerados em maiúsculas).
 
 ```python
 includefile src/cor.py
@@ -553,16 +585,72 @@ def busca_chave(dic: Dicionario, chave: str) -> None | int:
     '''Devolve o valor associado com chave em dic, ou None se chave não estiver em dic.'''
 ```
 
-Assim como para enumerações, o `mypy` também é bastante robusto no tratamento de uniões devido a análise de [refinamento de tipos](https://mypy.readthedocs.io/en/stable/type_narrowing.html). No exemplo da embalagem, o `mypy` só permite que o campo `diametro`{.python} seja acessado através da variável `emb`{.python} se ele puder provar que `emb`{.python} é uma instância de `Rolo`{.python}, que é o caso no exemplo devido ao `if`. Use o verificador [online](https://mypy-play.net) do `mypy` e tente construções inválidas que só seriam identificas pelo Python em tempo de execução e veja que o `mypy` identifica essas construções de forma estática.
+Assim como para enumerações, o `mypy` também é bastante robusto no tratamento de uniões devido a análise de [refinamento de tipos](https://mypy.readthedocs.io/en/stable/type_narrowing.html). No exemplo da embalagem, o `mypy` só permite que o campo `diametro`{.python} seja acessado através da variável `emb`{.python} se ele puder provar que `emb`{.python} é uma instância de `Rolo`{.python}, que é o caso no exemplo devido ao `if`{.python}. Use o verificador [online](https://mypy-play.net) do `mypy` e tente construções inválidas que só seriam identificas pelo Python em tempo de execução e veja que o `mypy` identifica essas construções de forma estática.
 
 O refinamento de tipos é bastante útil, e nos permite, por exemplo, garantir que não haverá acesso a referências nulas em tempo de execução (como mostrado na seção \ref{exemplos})
+
+
+### Classes {#classes}
+
+A forma geral para definição de tipos em Python é a construção `class`{.python}. A seguir mostramos a declaração de uma classe e um método e alguns exemplos de uso:
+
+```python
+class Ponto:
+    x: int
+    y: int
+
+    # Construtores que recebem parâmetros precisam ser criados explicitamente
+    # O parâmetro self é a instância do ponto que está sendo inicializada
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+    def distancia_origem(self) -> float: # self é uma referência para uma instância
+        '''
+        Calcula a distância do ponto a origem.
+        Exemplos
+        >>> p = Ponto(3, 4)
+        >>> p.distancia_origem()
+        5.0
+        '''
+        return (x ** 2 + y ** 2) ** 0.5
+
+>>> p = Ponto(10, 20)
+>>> p.x
+10
+>>> p.y
+20
+>>> p.x = p.x + 1
+>>> # Por padrão, a representação do objeto é opaca
+>>> p
+<__main__.Ponto object at 0x7fad1fac8530>
+>>> # Por padrão, a comparação é por referência e não pelo conteúdo
+>>> p == Ponto(11, 20)
+False
+>>> p == p
+True
+```
+
+Quando devemos usar `@dataclass`{.python} e classes "normais"? Usamos `@dataclass`{.python} quando queremos apenas agrupar dados e o encapsulamento não é importante. Classes "normais" devem ser usadas nas demais situações, como por exemplo, para criar tipos abstratos de dados (veja a seção \ref{tad}).
 
 
 ## Entrada e saída
 
 A principal função de entrada em Python é a função `input`{.python}, que recebe um argumento (mensagem a ser exibida) e retorna uma linha lida (string) da entrada padrão. O Python não tem funções para fazer entrada de dados formatada.
 
-O Python tem diversas funções de saída (incluindo saída formatada), a mais comum é a função `print`{.python}. A função `print`{.python} recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str`{.python} e exibe os valores separando-os por espaço e adicionando um final de linha (esse comportamento pode ser alterado).
+O Python tem diversas funções de saída (incluindo saída formatada), a mais comum é a função `print`{.python}. A função `print`{.python} recebe um número variado de argumentos (de qualquer tipo), converte cada argumento para uma string com a função `str`{.python} e exibe os valores separando-os por espaço e adicionando final de linha (esse comportamento pode ser alterado).
+
+O exemplo a seguir mostra como ler um nome e a data de nascimento de uma pessoa:
+
+```python
+>>> nome = input('Qual é o seu nome?') # João
+>>> data = input('Qual a data de nascimento (no formato DD/MM/AAAA)?') # 01/02/2003
+>>> # Fazemos um processamento para obter o ano.
+>>> # Omitimos o tratamento de erro.
+>>> ano = int(data.split('/')[2])
+>>> print(nome, 'em 2050 você terá', 2050 - ano, 'anos.')
+João, em 2050 você terá 47 anos.
+```
 
 
 # Exemplos {#exemplos}
@@ -572,22 +660,36 @@ Nesta seção mostramos alguns exemplos de algoritmos e estruturas de dados impl
 
 ## Ordenação por intercalação
 
+O exemplo a seguir mostra a implementação do algoritmo de ordenação por intercalação (merge sort). Note que o código poderia ser simplificado utilizando sublistas (_slices_), mas a intenção do exemplo é mostrar a implementação usando apenas as construções que são comuns na maioria das linguagens.
+
 ```python
 includefile src/ordena_intercalacao.py
 ```
 
 
-## Busca por chave em dicionário
+## TAD dicionário implementado com funções
+
+O exemplo a seguir mostra a implementação de um TAD dicionário usando busca linear e funções. Apenas as operações de inserção e busca são mostradas. Note que usamos `@dataclass`{.python} para a implementação ficar mais semelhante a que seria feita em C. Na próxima seção mostramos um exemplo que utiliza classe "normal" para enfatizar o encapsulamento.
 
 ```python
 includefile src/dicionario.py
 ```
 
 
-## Inserção ordenada em lista encadeada com alocação estática
+## TAD lista ordenada implementado com classe {#tad}
+
+Nos exemplos a seguir mostramos a implementação de um TAD de lista ordenada usando encadeamento. No primeiro exemplo os nós são alocados dinamicamente. No segundo exemplo os nós são alocados quando a lista é criada (simulando alocação estática) e o encadeamento é feitos com índices (cursores). Note que são duas implementações diferentes para o mesmo TAD. Apenas a função de inserção é mostrada.
+
+**Implementação com encadeamento ilimitado**
 
 ```python
-includefile src/lista_estatica.py
+includefile src/lista.py
+```
+
+**Implementação com encadeamento de tamanho máximo fixo**
+
+```python
+includefile src/lista_tamanho_fixo.py
 ```
 
 
@@ -610,9 +712,11 @@ Essas são algumas [convenções](https://peps.python.org/pep-0008/) oficiais pa
 - Use espaços entre operadores (`c += (a + b) * (a - b)`{.python} ao invés de `c+=(a+b)*(a-b)`{.python})
 
 
-# Referências
+# Bibliografia
 
-Ensino de programação
+A seguir estão algumas referências bibliográficas que podem ser úteis tanto para os professores quanto para os alunos.
+
+**Ensino de programação**
 
 - [A Data-Centric Introduction to Computing](https://dcic-world.org/)
 
@@ -622,11 +726,11 @@ Ensino de programação
 
 - [Think Python 2e](https://greenteapress.com/wp/think-python-2e/) ([tradução](https://penseallen.github.io/PensePython2e/) em português)
 
-Estrutura de dados
+**Estrutura de dados**
 
 - [Open data structures](https://opendatastructures.org/ods-python.pdf) (em pseudo código que foi gerado automaticamente a partir do código Python)
 
-Linguagem Python
+**Linguagem Python**
 
 - [Dive into Python 3](https://diveintopython3.net/)
 

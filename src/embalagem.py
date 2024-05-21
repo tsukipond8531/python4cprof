@@ -20,7 +20,8 @@ class Rolo:
 Embalagem = Envelope | Caixa | Rolo
 
 def dentro_limites(emb: Embalagem) -> bool:
-    '''Produz True se emb está dentro dos limites, False caso contrário.
+    '''
+    Produz True se *emb* está dentro dos limites, False caso contrário.
 
     Uma embalagem está dentro dos limites se suas medidas obedecem as seguintes
     restrições (em cm).

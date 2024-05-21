@@ -1,6 +1,6 @@
 def ordena(nomes: list[str]) -> list[str]:
     '''
-    Cria uma nova lista com os mesmos elementos de nomes mas de forma ordenada.
+    Cria uma nova lista com os mesmos elementos de *nomes* mas em ordem alfabética.
 
     Exemplo
     >>> ordena(['Paulo', 'Ana', 'Maria', 'João'])
