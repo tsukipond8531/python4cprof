@@ -1,6 +1,10 @@
 ---
 # vim: set spell spelllang=pt_br:
-title: Visão geral do Python para professores que usam C
+title: Uma visão geral do Python para professores que usam C
+author:
+    - Marco A L Barbosa
+    - "[malbarbo.pro.br](https://malbarbo.pro.br)"
+date: \today
 papersize: a4
 geometry:
 - margin=2cm
@@ -83,7 +87,7 @@ Historicamente Python tem sido classificada como dinamicamente tipada, isto é, 
 
 Atualmente o Python suporta a especificação de tipos tanto de variáveis como funções. Essa característica foi adicionada inicialmente no Python 3.5 (lançado em 2015) e têm sido aprimorado a cada versão (o Python 2 não suporta especificação de tipos).
 
-O interpretador padrão do Python (<https://python.org>) ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o quê o `mypy` identifica como erro.
+O interpretador padrão do [Python](https://python.org) ignora todas as anotações de tipos, mas existem ferramentes que podem utilizar essas anotações para fazer verificações estáticas no código. Uma dessas ferramentes é o [mypy](https://mypy-lang.org/). O `mypy` faz uma verificação estática dos tipos e indica os erros se forem encontrados. Por exemplo, no código a seguir, declaramos `n` como inteiro mas estamos atribuindo um ponto flutuante, o quê o `mypy` identifica como erro.
 
 ```python
 n: int = 10.2
@@ -91,7 +95,7 @@ n: int = 10.2
 
 Dessa forma, usando o `mypy`, podemos desenvolver os programas em Python como se eles fossem estaticamente tipados, mesmo que de fato as anotações de tipo não alterem a forma como o programa é executado. O sistema de tipos do `mypy` é muito poderoso e permite expressar muitas restrições estaticamente. A seção \ref{exemplos} apresenta mais informações sobres essas questões.
 
-Outro aspecto diferente entre as duas linguagem é que em C todos os tipos são "tipos valores", enquanto que em Python os tipos são "tipos referências" (<https://en.wikipedia.org/wiki/Value_type_and_reference_type>).
+Outro aspecto diferente entre as duas linguagem é que em C todos os tipos são "tipos valores", enquanto que em Python os tipos são ["tipos referências"](https://en.wikipedia.org/wiki/Value_type_and_reference_type).
 
 O principal efeito dessa diferença é visto na atribuição e na passagem de parâmetros. Discutimos essa questão na próxima seção.
 
@@ -643,12 +647,19 @@ O Python tem diversas funções de saída (incluindo saída formatada), a mais c
 O exemplo a seguir mostra como ler um nome e a data de nascimento de uma pessoa:
 
 ```python
->>> nome = input('Qual é o seu nome?') # João
->>> data = input('Qual a data de nascimento (no formato DD/MM/AAAA)?') # 01/02/2003
->>> # Fazemos um processamento para obter o ano.
->>> # Omitimos o tratamento de erro.
->>> ano = int(data.split('/')[2])
->>> print(nome, 'em 2050 você terá', 2050 - ano, 'anos.')
+nome = input('Qual é o seu nome?')
+data = input('Qual é a sua data de nascimento?')
+# Fazemos um processamento para obter o ano.
+# Omitimos o tratamento de erro.
+ano = int(data.split('/')[2])
+print(nome + ',', 'em 2050 você terá', 2050 - ano, 'anos.')
+```
+
+Execução
+
+```
+Qual é o seu nome? João
+Qual é a sua data de nascimento? 01/02/2003
 João, em 2050 você terá 47 anos.
 ```
 
@@ -676,7 +687,7 @@ includefile src/dicionario.py
 ```
 
 
-## TAD lista ordenada implementado com classe {#tad}
+## TAD lista ordenada implementado com classes {#tad}
 
 Nos exemplos a seguir mostramos a implementação de um TAD de lista ordenada usando encadeamento. No primeiro exemplo os nós são alocados dinamicamente. No segundo exemplo os nós são alocados quando a lista é criada (simulando alocação estática) e o encadeamento é feitos com índices (cursores). Note que são duas implementações diferentes para o mesmo TAD. Apenas a função de inserção é mostrada.
 
@@ -716,7 +727,7 @@ Essas são algumas [convenções](https://peps.python.org/pep-0008/) oficiais pa
 
 A seguir estão algumas referências bibliográficas que podem ser úteis tanto para os professores quanto para os alunos.
 
-**Ensino de programação**
+**Introdução a programação**
 
 - [A Data-Centric Introduction to Computing](https://dcic-world.org/)
 
@@ -725,6 +736,8 @@ A seguir estão algumas referências bibliográficas que podem ser úteis tanto 
 - [SICP in Python](https://wizardforcel.gitbooks.io/sicp-in-python/content/) ([vídeos](https://inst.eecs.berkeley.edu/~cs61a/fa22/))
 
 - [Think Python 2e](https://greenteapress.com/wp/think-python-2e/) ([tradução](https://penseallen.github.io/PensePython2e/) em português)
+
+- [Notas de aula de introdução a programação em Python](https://github.com/malbarbo/na-programacao) (do mesmo autor desse texto)
 
 **Estrutura de dados**
 
