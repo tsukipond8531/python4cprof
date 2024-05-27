@@ -737,7 +737,7 @@ A seguir estão algumas referências bibliográficas que podem ser úteis tanto 
 
 - [Think Python 2e](https://greenteapress.com/wp/think-python-2e/) ([tradução](https://penseallen.github.io/PensePython2e/) em português)
 
-- [Notas de aula de introdução a programação em Python](https://github.com/malbarbo/na-programacao) (do mesmo autor desse texto)
+- Notas de aula de [introdução a programação](https://malbarbo.pro.br/ensino/2023/6879/) e de [estruturas de dados](https://malbarbo.pro.br/ensino/2023/6884/) em Python (do mesmo autor desse texto)
 
 **Estrutura de dados**
 
